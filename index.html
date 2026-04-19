@@ -10,11 +10,10 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 
 .hd{background:#1F3864;color:#fff;padding:14px 16px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25);}
 .hd-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.hd-title{font-size:15px;font-weight:700;letter-spacing:-.3px;}
+.hd-title{font-size:15px;font-weight:700;}
 .hd-date{font-size:11px;opacity:.7;margin-top:2px;}
 .refresh{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 11px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;}
 .refresh:active{opacity:.7;}
-
 .tabs{display:flex;}
 .tab{flex:1;text-align:center;padding:10px 4px;font-size:13px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;}
 .tab.on{color:#fff;border-bottom-color:#FFD700;}
@@ -27,7 +26,7 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 @keyframes spin{to{transform:rotate(360deg);}}
 .err{background:#fff0f0;border:1px solid #fcc;border-radius:10px;padding:20px;text-align:center;color:#c00;font-size:13px;margin-top:16px;line-height:1.6;}
 
-/* 탭1 */
+/* ── 탭1: 픽업 체크 ── */
 .stat-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
 .stat{background:#fff;border-radius:10px;padding:10px 8px;text-align:center;border:1px solid #eee;}
 .stat .n{font-size:24px;font-weight:700;line-height:1.1;}
@@ -37,47 +36,108 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 .reset-btn{width:100%;padding:9px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;font-size:12px;color:#aaa;cursor:pointer;margin-bottom:12px;font-family:inherit;}
 .reset-btn:active{background:#f5f5f5;}
 
-.bklist{display:flex;flex-direction:column;gap:7px;}
-.bk{background:#fff;border-radius:12px;padding:13px 14px;border:1.5px solid #ececec;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .12s;user-select:none;}
-.bk:active{transform:scale(.98);}
+/* 시간대 그룹 */
+.time-group{margin-bottom:16px;}
+.time-label{
+  font-size:13px;font-weight:700;color:#1F3864;
+  padding:6px 10px;background:#e8edf5;border-radius:8px;
+  margin-bottom:6px;display:flex;align-items:center;gap:6px;
+}
+.time-label .tl-count{
+  font-size:11px;font-weight:400;color:#7a90b5;
+}
+
+.bklist{display:flex;flex-direction:column;gap:6px;}
+
+.bk{
+  background:#fff;border-radius:10px;
+  padding:12px 14px;border:1.5px solid #ececec;
+  display:flex;align-items:flex-start;gap:12px;
+  cursor:pointer;transition:all .12s;user-select:none;
+}
+.bk:active{transform:scale(.99);}
 .bk.done{background:#f0f8f0;border-color:#a8d8a8;}
 .bk.cancelled{background:#f9f9f9;border-color:#e5e5e5;opacity:.5;cursor:default;}
 
-.chk{width:26px;height:26px;border-radius:50%;border:2px solid #ccc;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.chk{
+  width:26px;height:26px;border-radius:50%;border:2px solid #ccc;
+  flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
 .chk.on{background:#2d6a2d;border-color:#2d6a2d;}
 .chk.on::after{content:'';width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px);display:block;}
 
-.bk-info{flex:1;min-width:0;}
-.bk-name{font-size:15px;font-weight:700;}
-.bk-item{font-size:12px;color:#666;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.bk-req{font-size:11px;color:#c06000;background:#fff8ee;padding:2px 6px;border-radius:4px;margin-top:3px;display:inline-block;}
+.bk-body{flex:1;min-width:0;}
 
-.bk-meta{text-align:right;flex-shrink:0;}
-.pickup-t{font-size:16px;font-weight:700;color:#1F3864;}
-.bn-badge{display:inline-block;background:#e8f4e8;color:#2d6a2d;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-top:3px;}
+/* 1행: 이름 + 보냉백 */
+.bk-row1{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
+.bk-name{font-size:15px;font-weight:700;color:#1a1a1a;}
+.bn-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:#e8f4e8;color:#2d6a2d;
+  font-size:11px;font-weight:700;
+  padding:2px 7px;border-radius:20px;flex-shrink:0;
+}
+
+/* 2행: 메뉴 */
+.bk-item{font-size:13px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* 3행: 요청사항 */
+.bk-req{
+  display:inline-block;margin-top:5px;
+  font-size:11px;color:#b85c00;
+  background:#fff3e0;border:1px solid #ffd8a8;
+  padding:3px 8px;border-radius:6px;
+  line-height:1.4;
+}
 
 .cancel-hd{font-size:11px;font-weight:700;color:#c00;margin:16px 0 7px;}
 
-/* 탭2 */
+/* ── 탭2: 생산 현황 ── */
 .prod-wrap{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e8e8e8;margin-bottom:12px;}
-.prod-hd{display:grid;grid-template-columns:1fr 50px 72px 50px 58px;background:#1F3864;color:#fff;font-size:11px;font-weight:700;text-align:center;padding:10px 12px;gap:4px;}
+.prod-hd{
+  display:grid;grid-template-columns:1fr 64px 64px 54px 58px;
+  background:#1F3864;color:#fff;font-size:11px;font-weight:700;
+  text-align:center;padding:10px 12px;gap:4px;
+}
 .prod-hd .ph-l{text-align:left;}
-.prod-row{display:grid;grid-template-columns:1fr 50px 72px 50px 58px;padding:10px 12px;border-bottom:1px solid #f2f2f2;align-items:center;gap:4px;}
+.prod-row{
+  display:grid;grid-template-columns:1fr 64px 64px 54px 58px;
+  padding:9px 12px;border-bottom:1px solid #f2f2f2;
+  align-items:center;gap:4px;
+}
 .prod-row:last-child{border:none;}
 .pname{font-size:13px;font-weight:600;color:#222;}
 .pname.dim{color:#bbb;font-weight:400;}
 .pc{text-align:center;font-size:14px;font-weight:700;}
-.pc-j{color:#aaa;}.pc-y{color:#2d6a2d;}.pc-t{color:#1F3864;font-size:16px;}.pc-e{color:#ddd;font-weight:400;font-size:13px;}
-.qty-input{width:100%;text-align:center;border:1.5px solid #0070C0;border-radius:6px;padding:5px 2px;font-size:14px;font-weight:700;color:#0070C0;background:#f0f8ff;font-family:inherit;outline:none;}
-.qty-input:focus{border-color:#1F3864;background:#e8f0ff;}
-.prod-foot{display:grid;grid-template-columns:1fr 50px 72px 50px 58px;padding:10px 12px;background:#1F3864;color:#fff;font-size:13px;font-weight:700;text-align:center;gap:4px;}
+.pc-y{color:#2d6a2d;}
+.pc-t{color:#1F3864;font-size:16px;}
+.pc-e{color:#ddd;font-weight:400;font-size:13px;}
+
+/* 조각/현장 수정 input */
+.qty-input{
+  width:100%;text-align:center;
+  border:1.5px solid #ccc;border-radius:6px;
+  padding:5px 2px;font-size:14px;font-weight:700;
+  color:#555;background:#fafafa;
+  font-family:inherit;outline:none;
+}
+.qty-input:focus{border-color:#1F3864;background:#f0f4ff;color:#1F3864;}
+.qty-input.saving{border-color:#aaa;opacity:.6;}
+
+.prod-foot{
+  display:grid;grid-template-columns:1fr 64px 64px 54px 58px;
+  padding:10px 12px;background:#1F3864;color:#fff;
+  font-size:13px;font-weight:700;text-align:center;gap:4px;
+}
 .prod-foot .ph-l{text-align:left;}
+
 .legend{display:flex;gap:14px;justify-content:center;font-size:11px;color:#999;margin-top:8px;}
 .ldot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:3px;vertical-align:middle;}
 .hint{background:#fff;border-radius:10px;border:1px solid #eee;padding:12px;text-align:center;font-size:12px;color:#aaa;margin-top:10px;}
 .hint b{color:#1F3864;}
 
-.save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1F3864;color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:999;}
+.save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1F3864;color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:999;white-space:nowrap;}
 .save-toast.show{opacity:1;}
 </style>
 </head>
@@ -105,8 +165,8 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 <div class="save-toast" id="toast"></div>
 
 <script>
-// ★ GAS 웹앱 URL 입력 (api.gs 배포 후 받은 URL) ★
-const API_URL = 'https://script.google.com/macros/s/AKfycbyH3T-eeuWicwjvIxPKCU7SXv5YBQmvaT2YmipbW1FmJLJoTZyiMuLVOQLKv_2ZHsSzUA/exec';
+// ★ GAS 웹앱 URL 입력 ★
+const API_URL = 'YOUR_GAS_WEBAPP_URL_HERE';
 
 let appData    = null;
 let pickStatus = {};
@@ -123,7 +183,6 @@ function toast(msg) {
   setTimeout(() => el.classList.remove('show'), 1800);
 }
 
-// GET 요청만 사용 — CORS 문제 없음
 async function api(params) {
   const url = API_URL + '?' + new URLSearchParams(params);
   const res = await fetch(url, { redirect: 'follow' });
@@ -133,23 +192,19 @@ async function api(params) {
 async function loadAll() {
   document.getElementById('p0').innerHTML = '<div class="loading"><div class="spinner"></div>데이터 불러오는 중...</div>';
   document.getElementById('p1').innerHTML = '<div class="loading"><div class="spinner"></div>데이터 불러오는 중...</div>';
-
   try {
-    // 데이터와 픽업상태 병렬 요청
     const [data, ps] = await Promise.all([
       api({ action: 'data' }),
       api({ action: 'pickup' }),
     ]);
-
     if (data.error) { showErr(data.error); return; }
-
     appData    = data;
     pickStatus = ps.status || {};
     document.getElementById('date-str').textContent = data.dateStr || '';
     renderPickup();
     renderProd();
   } catch(e) {
-    showErr('네트워크 오류: ' + e.message + '<br><br>API_URL이 올바른지 확인하세요.');
+    showErr('네트워크 오류: ' + e.message + '<br><br>API_URL을 확인하세요.');
   }
 }
 
@@ -159,6 +214,19 @@ function showErr(msg) {
   document.getElementById('p1').innerHTML = h;
 }
 
+// ── 시간 포맷 변환 ───────────────────────────────────────────
+// "13:00" → "오후 1시"
+function fmtTime(t) {
+  if (!t) return '';
+  const [hStr] = t.split(':');
+  const h = parseInt(hStr, 10);
+  if (isNaN(h)) return t;
+  if (h === 0  || h === 24) return '자정';
+  if (h === 12) return '정오 12시';
+  if (h < 12)  return '오전 ' + h + '시';
+  return '오후 ' + (h - 12) + '시';
+}
+
 // ── 탭1: 픽업 체크 ──────────────────────────────────────────
 function renderPickup() {
   const conf = appData.bookings.filter(b => !b.cancelled);
@@ -166,6 +234,8 @@ function renderPickup() {
   const done = conf.filter(b => pickStatus[b.name + '_' + b.pickup]).length;
 
   let h = '';
+
+  // 요약 카드
   h += '<div class="stat-bar">'
      + '<div class="stat"><div class="n n-done">' + done + '</div><div class="l">픽업 완료</div></div>'
      + '<div class="stat"><div class="n n-wait">' + (conf.length - done) + '</div><div class="l">대기 중</div></div>'
@@ -173,31 +243,53 @@ function renderPickup() {
      + '</div>';
 
   h += '<button class="reset-btn" onclick="resetPickup()">픽업 상태 전체 초기화</button>';
-  h += '<div class="bklist">';
 
+  // 시간대별 그룹핑
+  const groups = {};
   for (const b of conf) {
-    const key     = b.name + '_' + b.pickup;
-    const checked = !!pickStatus[key];
-    h += '<div class="bk' + (checked ? ' done' : '') + '" id="bk-' + esc(key) + '" onclick="togglePickup(\'' + esc(key) + '\')">'
-       + '<div class="chk' + (checked ? ' on' : '') + '" id="chk-' + esc(key) + '"></div>'
-       + '<div class="bk-info">'
-       + '<div class="bk-name">' + esc(b.name) + '</div>'
-       + '<div class="bk-item">' + esc(b.item) + '</div>'
-       + (b.request ? '<div class="bk-req">' + esc(b.request) + '</div>' : '')
-       + '</div>'
-       + '<div class="bk-meta">'
-       + '<div class="pickup-t">' + esc(b.pickup) + '</div>'
-       + (b.bonaeng === 'O' ? '<div class="bn-badge">보냉백</div>' : '')
-       + '</div></div>';
+    const t = b.pickup || '시간미정';
+    if (!groups[t]) groups[t] = [];
+    groups[t].push(b);
   }
-  h += '</div>';
+  const sortedTimes = Object.keys(groups).sort();
 
+  for (const time of sortedTimes) {
+    const bks       = groups[time];
+    const groupDone = bks.filter(b => pickStatus[b.name + '_' + b.pickup]).length;
+    h += '<div class="time-group">';
+    h += '<div class="time-label">'
+       + fmtTime(time)
+       + '<span class="tl-count">· ' + groupDone + '/' + bks.length + ' 완료</span>'
+       + '</div>';
+    h += '<div class="bklist">';
+    for (const b of bks) {
+      const key     = b.name + '_' + b.pickup;
+      const checked = !!pickStatus[key];
+      h += '<div class="bk' + (checked ? ' done' : '') + '" id="bk-' + esc(key) + '" onclick="togglePickup(\'' + esc(key) + '\')">'
+         + '<div class="chk' + (checked ? ' on' : '') + '" id="chk-' + esc(key) + '"></div>'
+         + '<div class="bk-body">'
+         // 1행: 이름 + 보냉백
+         + '<div class="bk-row1">'
+         + '<div class="bk-name">' + esc(b.name) + '</div>'
+         + (b.bonaeng === 'O' ? '<div class="bn-badge">❄ 보냉백</div>' : '')
+         + '</div>'
+         // 2행: 메뉴
+         + '<div class="bk-item">' + esc(b.item) + '</div>'
+         // 3행: 요청사항
+         + (b.request ? '<div class="bk-req">📝 ' + esc(b.request) + '</div>' : '')
+         + '</div>'
+         + '</div>';
+    }
+    h += '</div></div>';
+  }
+
+  // 취소건
   if (canc.length) {
     h += '<div class="cancel-hd">취소건 (' + canc.length + ')</div><div class="bklist">';
     for (const b of canc) {
-      h += '<div class="bk cancelled"><div class="bk-info">'
-         + '<div class="bk-name" style="text-decoration:line-through;color:#bbb">' + esc(b.name) + '</div>'
-         + '<div class="bk-item">' + esc(b.item) + ' — ' + esc(b.pickup) + '</div>'
+      h += '<div class="bk cancelled"><div class="bk-body">'
+         + '<div class="bk-row1"><div class="bk-name" style="text-decoration:line-through;color:#bbb">' + esc(b.name) + '</div></div>'
+         + '<div class="bk-item">' + esc(b.item) + ' · ' + fmtTime(b.pickup) + '</div>'
          + '</div></div>';
     }
     h += '</div>';
@@ -213,12 +305,12 @@ async function togglePickup(key) {
   document.getElementById('bk-'  + key)?.classList.toggle('done', newVal);
   document.getElementById('chk-' + key)?.classList.toggle('on',   newVal);
 
+  // 카운터 + 시간대 카운터 갱신
   const conf = appData.bookings.filter(b => !b.cancelled);
   const done = conf.filter(b => pickStatus[b.name + '_' + b.pickup]).length;
   document.querySelector('.n-done').textContent = done;
   document.querySelector('.n-wait').textContent = conf.length - done;
 
-  // GET으로 저장
   await api({ action: 'setPickup', key, checked: newVal });
 }
 
@@ -236,18 +328,26 @@ function renderProd() {
   let tj = 0, th = 0, ty = 0, tt = 0;
 
   let h = '<div class="prod-wrap">'
-        + '<div class="prod-hd"><div class="ph-l">품목</div><div>조각</div><div>현장(수정)</div><div>예약</div><div>합계</div></div>';
+        + '<div class="prod-hd"><div class="ph-l">품목</div><div>조각</div><div>현장</div><div>예약</div><div>합계</div></div>';
 
   for (const item of items) {
-    tj += item.jogak; th += item.hyunjang; ty += item.yeyak; tt += item.total;
-    const nd = item.total === 0;
+    tj += item.jogak; th += item.hyunjang; ty += item.yeyak;
+    const total = item.jogak + item.hyunjang + item.yeyak;
+    tt += total;
+    const nd = total === 0;
+
     h += '<div class="prod-row">'
        + '<div class="pname' + (nd ? ' dim' : '') + '">' + esc(item.name) + '</div>'
-       + '<div class="pc pc-j">' + (item.jogak ? item.jogak : '<span class="pc-e">-</span>') + '</div>'
+       // 조각 — 수정 가능
+       + '<div><input class="qty-input" type="number" min="0" value="' + item.jogak
+       + '" onchange="saveQty(\'' + esc(item.name) + '\',\'jogak\',this.value,this)" onfocus="this.select()"></div>'
+       // 현장 — 수정 가능
        + '<div><input class="qty-input" type="number" min="0" value="' + item.hyunjang
-       + '" onchange="saveQty(\'' + esc(item.name) + '\',\'hyunjang\',this.value)" onfocus="this.select()"></div>'
-       + '<div class="pc pc-y">' + (item.yeyak  ? item.yeyak  : '<span class="pc-e">-</span>') + '</div>'
-       + '<div class="pc pc-t">' + (item.total  ? item.total  : '<span class="pc-e">-</span>') + '</div>'
+       + '" onchange="saveQty(\'' + esc(item.name) + '\',\'hyunjang\',this.value,this)" onfocus="this.select()"></div>'
+       // 예약 — 읽기 전용
+       + '<div class="pc pc-y">' + (item.yeyak ? item.yeyak : '<span class="pc-e">-</span>') + '</div>'
+       // 합계
+       + '<div class="pc pc-t">' + (total ? total : '<span class="pc-e">-</span>') + '</div>'
        + '</div>';
   }
 
@@ -258,14 +358,44 @@ function renderProd() {
      + '<span><span class="ldot" style="background:#0070C0"></span>현장</span>'
      + '<span><span class="ldot" style="background:#2d6a2d"></span>예약</span>'
      + '</div>'
-     + '<div class="hint">현장 수량 입력 후 엔터 → <b>Google Sheets 자동 저장</b></div>';
+     + '<div class="hint">조각·현장 수량 입력 후 엔터 → <b>Google Sheets 자동 저장</b></div>';
 
   document.getElementById('p1').innerHTML = h;
 }
 
-async function saveQty(item, type, value) {
+async function saveQty(item, type, value, inputEl) {
+  inputEl.classList.add('saving');
   const res = await api({ action: 'updateQty', item, type, value: Number(value) });
-  toast(res.ok ? '저장 완료 ✓' : '저장 실패: ' + res.error);
+  inputEl.classList.remove('saving');
+  if (res.ok) {
+    toast('저장 완료 ✓');
+    // 합계 행 갱신을 위해 생산 현황 재렌더
+    if (appData) {
+      const target = appData.items.find(i => i.name === item);
+      if (target) {
+        target[type] = Number(value);
+        target.total = target.jogak + target.hyunjang + target.yeyak;
+      }
+      // 합계만 조용히 갱신
+      updateProdTotals();
+    }
+  } else {
+    toast('저장 실패: ' + (res.error || ''));
+  }
+}
+
+function updateProdTotals() {
+  const items = appData.items;
+  let tj=0, th=0, ty=0, tt=0;
+  for (const i of items) { tj+=i.jogak; th+=i.hyunjang; ty+=i.yeyak; tt+=(i.jogak+i.hyunjang+i.yeyak); }
+  const foot = document.querySelector('.prod-foot');
+  if (foot) {
+    const cells = foot.querySelectorAll('div');
+    if (cells[1]) cells[1].textContent = tj;
+    if (cells[2]) cells[2].textContent = th;
+    if (cells[3]) cells[3].textContent = ty;
+    if (cells[4]) cells[4].textContent = tt;
+  }
 }
 
 function esc(s) {
