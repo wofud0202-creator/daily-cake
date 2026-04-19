@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>La Terrasse — 직원용</title>
+<style>
+/* ── 설정: GAS 웹앱 URL을 여기에 입력 ── */
+/* index.html 상단 JS의 API_URL 변수 참고 */
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4f3ef;color:#1a1a1a;min-height:100vh;overscroll-behavior:none;}
+
+/* 헤더 */
+.hd{background:#1F3864;color:#fff;padding:14px 16px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25);}
+.hd-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.hd-title{font-size:15px;font-weight:700;letter-spacing:-.3px;}
+.hd-date{font-size:11px;opacity:.7;margin-top:2px;}
+.hd-right{display:flex;align-items:center;gap:8px;}
+.refresh{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 11px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;}
+.refresh:active{opacity:.7;}
+
+/* 탭 */
+.tabs{display:flex;}
+.tab{flex:1;text-align:center;padding:10px 4px;font-size:13px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;}
+.tab.on{color:#fff;border-bottom-color:#FFD700;}
+
+/* 컨텐츠 */
+.content{padding:14px;max-width:680px;margin:0 auto;}
+.panel{display:none;}.panel.on{display:block;}
+
+/* 로딩/에러 */
+.loading{text-align:center;padding:60px 20px;color:#aaa;font-size:13px;}
+.spinner{width:28px;height:28px;border:3px solid #e0e0e0;border-top-color:#1F3864;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.err{background:#fff0f0;border:1px solid #fcc;border-radius:10px;padding:20px;text-align:center;color:#c00;font-size:13px;margin-top:16px;}
+
+/* ── 탭1: 픽업 체크 ── */
+.stat-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.stat{background:#fff;border-radius:10px;padding:10px 8px;text-align:center;border:1px solid #eee;}
+.stat .n{font-size:24px;font-weight:700;line-height:1.1;}
+.stat .l{font-size:11px;color:#999;margin-top:2px;}
+.n-done{color:#2d6a2d;}
+.n-wait{color:#1F3864;}
+.n-all{color:#888;}
+
+.reset-btn{width:100%;padding:9px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;font-size:12px;color:#aaa;cursor:pointer;margin-bottom:12px;font-family:inherit;}
+.reset-btn:active{background:#f5f5f5;}
+
+.bklist{display:flex;flex-direction:column;gap:7px;}
+
+.bk{background:#fff;border-radius:12px;padding:13px 14px;border:1.5px solid #ececec;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .12s;user-select:none;}
+.bk:active{transform:scale(.98);}
+.bk.done{background:#f0f8f0;border-color:#a8d8a8;}
+.bk.cancelled{background:#f9f9f9;border-color:#e5e5e5;opacity:.5;cursor:default;}
+
+.chk{width:26px;height:26px;border-radius:50%;border:2px solid #ccc;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.chk.on{background:#2d6a2d;border-color:#2d6a2d;}
+.chk.on::after{content:'';width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px);display:block;}
+
+.bk-info{flex:1;min-width:0;}
+.bk-name{font-size:15px;font-weight:700;}
+.bk-item{font-size:12px;color:#666;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bk-req{font-size:11px;color:#c06000;background:#fff8ee;padding:2px 6px;border-radius:4px;margin-top:3px;display:inline-block;}
+
+.bk-meta{text-align:right;flex-shrink:0;}
+.pickup-t{font-size:16px;font-weight:700;color:#1F3864;}
+.bn-badge{display:inline-block;background:#e8f4e8;color:#2d6a2d;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-top:3px;}
+
+.cancel-hd{font-size:11px;font-weight:700;color:#c00;margin:16px 0 7px;}
+
+/* ── 탭2: 생산 현황 ── */
+.prod-wrap{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e8e8e8;margin-bottom:12px;}
+
+.prod-hd{display:grid;grid-template-columns:1fr 54px 70px 54px 60px;background:#1F3864;color:#fff;font-size:11px;font-weight:700;text-align:center;padding:10px 12px;gap:4px;}
+.prod-hd .ph-l{text-align:left;}
+
+.prod-row{display:grid;grid-template-columns:1fr 54px 70px 54px 60px;padding:10px 12px;border-bottom:1px solid #f2f2f2;align-items:center;gap:4px;}
+.prod-row:last-child{border:none;}
+
+.pname{font-size:13px;font-weight:600;color:#222;}
+.pname.dim{color:#bbb;font-weight:400;}
+
+.pc{text-align:center;font-size:14px;font-weight:700;}
+.pc-j{color:#aaa;}
+.pc-h{color:#0070C0;}
+.pc-y{color:#2d6a2d;}
+.pc-t{color:#1F3864;font-size:16px;}
+.pc-e{color:#ddd;font-weight:400;font-size:13px;}
+
+/* 현장 수량 직접 입력 */
+.qty-input{width:54px;text-align:center;border:1.5px solid #0070C0;border-radius:6px;padding:4px 2px;font-size:14px;font-weight:700;color:#0070C0;background:#f0f8ff;font-family:inherit;outline:none;}
+.qty-input:focus{border-color:#1F3864;background:#e8f0ff;}
+
+.prod-foot{display:grid;grid-template-columns:1fr 54px 70px 54px 60px;padding:10px 12px;background:#1F3864;color:#fff;font-size:13px;font-weight:700;text-align:center;gap:4px;}
+.prod-foot .ph-l{text-align:left;}
+
+.legend{display:flex;gap:14px;justify-content:center;font-size:11px;color:#999;margin-top:8px;}
+.ldot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:3px;vertical-align:middle;}
+
+.hint{background:#fff;border-radius:10px;border:1px solid #eee;padding:12px;text-align:center;font-size:12px;color:#aaa;margin-top:10px;}
+.hint b{color:#1F3864;}
+
+/* 저장 피드백 */
+.save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1F3864;color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:999;}
+.save-toast.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <div class="hd-top">
+    <div>
+      <div class="hd-title">La Terrasse de Paris</div>
+      <div class="hd-date" id="date-str">불러오는 중...</div>
+    </div>
+    <div class="hd-right">
+      <button class="refresh" onclick="loadAll()">↻ 새로고침</button>
+    </div>
+  </div>
+  <div class="tabs">
+    <div class="tab on" onclick="switchTab(0)">픽업 체크</div>
+    <div class="tab" onclick="switchTab(1)">생산 현황</div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="panel on" id="p0">
+    <div class="loading"><div class="spinner"></div>데이터 불러오는 중...</div>
+  </div>
+  <div class="panel" id="p1">
+    <div class="loading"><div class="spinner"></div>데이터 불러오는 중...</div>
+  </div>
+</div>
+
+<div class="save-toast" id="toast"></div>
+
+<script>
+// ★ 여기에 GAS 웹앱 URL 입력 ★
+const API_URL = 'YOUR_GAS_WEBAPP_URL_HERE';
+
+let appData    = null;
+let pickStatus = {};
+
+// ── 탭 전환 ──────────────────────────────────────────────────
+function switchTab(i) {
+  document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('on', i===j));
+  document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('on', i===j));
+}
+
+// ── 토스트 ───────────────────────────────────────────────────
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 1600);
+}
+
+// ── API 호출 ─────────────────────────────────────────────────
+async function apiFetch(params) {
+  const url = API_URL + '?' + new URLSearchParams(params);
+  const res = await fetch(url);
+  return res.json();
+}
+
+async function apiPost(body) {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  return res.json();
+}
+
+// ── 전체 로드 ────────────────────────────────────────────────
+async function loadAll() {
+  document.getElementById('p0').innerHTML = '<div class="loading"><div class="spinner"></div>데이터 불러오는 중...</div>';
+  document.getElementById('p1').innerHTML = '<div class="loading"><div class="spinner"></div>데이터 불러오는 중...</div>';
+
+  try {
+    const [data, ps] = await Promise.all([
+      apiFetch({ action: 'data' }),
+      apiFetch({ action: 'pickup' }),
+    ]);
+
+    if (data.error) { showErr(data.error); return; }
+
+    appData    = data;
+    pickStatus = ps.status || {};
+    document.getElementById('date-str').textContent = data.dateStr || '';
+    renderPickup();
+    renderProd();
+  } catch(e) {
+    showErr('네트워크 오류: ' + e.message);
+  }
+}
+
+function showErr(msg) {
+  const html = '<div class="err">' + esc(msg) + '</div>';
+  document.getElementById('p0').innerHTML = html;
+  document.getElementById('p1').innerHTML = html;
+}
+
+// ── 탭1: 픽업 체크 ──────────────────────────────────────────
+function renderPickup() {
+  const conf   = appData.bookings.filter(b => !b.cancelled);
+  const canc   = appData.bookings.filter(b =>  b.cancelled);
+  const done   = conf.filter(b => pickStatus[b.name + '_' + b.pickup]).length;
+  const remain = conf.length - done;
+
+  let h = '';
+
+  // 요약
+  h += '<div class="stat-bar">';
+  h += '<div class="stat"><div class="n n-done">' + done + '</div><div class="l">픽업 완료</div></div>';
+  h += '<div class="stat"><div class="n n-wait">' + remain + '</div><div class="l">대기 중</div></div>';
+  h += '<div class="stat"><div class="n n-all">'  + conf.length + '</div><div class="l">전체 예약</div></div>';
+  h += '</div>';
+
+  h += '<button class="reset-btn" onclick="resetPickup()">픽업 상태 전체 초기화</button>';
+
+  // 예약 목록
+  h += '<div class="bklist">';
+  for (const b of conf) {
+    const key     = b.name + '_' + b.pickup;
+    const checked = !!pickStatus[key];
+    h += '<div class="bk' + (checked ? ' done' : '') + '" id="bk-' + esc(key) + '" onclick="togglePickup(\'' + esc(key) + '\')">';
+    h += '<div class="chk' + (checked ? ' on' : '') + '" id="chk-' + esc(key) + '"></div>';
+    h += '<div class="bk-info">';
+    h += '<div class="bk-name">' + esc(b.name) + '</div>';
+    h += '<div class="bk-item">' + esc(b.item) + '</div>';
+    if (b.request) h += '<div class="bk-req">' + esc(b.request) + '</div>';
+    h += '</div>';
+    h += '<div class="bk-meta"><div class="pickup-t">' + esc(b.pickup) + '</div>';
+    if (b.bonaeng === 'O') h += '<div class="bn-badge">보냉백</div>';
+    h += '</div></div>';
+  }
+  h += '</div>';
+
+  // 취소건
+  if (canc.length) {
+    h += '<div class="cancel-hd">취소건 (' + canc.length + ')</div><div class="bklist">';
+    for (const b of canc) {
+      h += '<div class="bk cancelled"><div class="bk-info">'
+        +  '<div class="bk-name" style="text-decoration:line-through;color:#bbb">' + esc(b.name) + '</div>'
+        +  '<div class="bk-item">' + esc(b.item) + ' — ' + esc(b.pickup) + '</div>'
+        +  '</div></div>';
+    }
+    h += '</div>';
+  }
+
+  document.getElementById('p0').innerHTML = h;
+}
+
+// ── 픽업 토글 ────────────────────────────────────────────────
+async function togglePickup(key) {
+  const newVal      = !pickStatus[key];
+  pickStatus[key]   = newVal;
+
+  // 즉시 UI 반영
+  document.getElementById('bk-'  + key)?.classList.toggle('done', newVal);
+  document.getElementById('chk-' + key)?.classList.toggle('on',   newVal);
+
+  // 카운터 갱신
+  const conf   = appData.bookings.filter(b => !b.cancelled);
+  const done   = conf.filter(b => pickStatus[b.name + '_' + b.pickup]).length;
+  document.querySelector('.n-done').textContent = done;
+  document.querySelector('.n-wait').textContent = conf.length - done;
+
+  // 서버 저장 (백그라운드)
+  await apiPost({ action: 'setPickup', key, checked: newVal });
+}
+
+async function resetPickup() {
+  if (!confirm('픽업 상태를 전체 초기화할까요?')) return;
+  pickStatus = {};
+  await apiPost({ action: 'resetPickup' });
+  renderPickup();
+  toast('초기화 완료');
+}
+
+// ── 탭2: 생산 현황 ──────────────────────────────────────────
+function renderProd() {
+  const items = appData.items;
+  let tj = 0, th = 0, ty = 0, tt = 0;
+
+  let h = '<div class="prod-wrap">';
+  h += '<div class="prod-hd"><div class="ph-l">품목</div><div>조각</div><div>현장 (수정가능)</div><div>예약</div><div>합계</div></div>';
+
+  for (const item of items) {
+    tj += item.jogak; th += item.hyunjang; ty += item.yeyak; tt += item.total;
+    const hasData = item.total > 0;
+    h += '<div class="prod-row">';
+    h += '<div class="pname' + (hasData ? '' : ' dim') + '">' + esc(item.name) + '</div>';
+    // 조각
+    h += '<div class="pc pc-j">' + (item.jogak    ? item.jogak    : '<span class="pc-e">-</span>') + '</div>';
+    // 현장 — 직접 수정 가능한 input
+    h += '<div><input class="qty-input" type="number" min="0" value="' + item.hyunjang
+       + '" onchange="saveQty(\'' + esc(item.name) + '\',\'hyunjang\',this.value)"'
+       + ' onfocus="this.select()"></div>';
+    // 예약
+    h += '<div class="pc pc-y">' + (item.yeyak    ? item.yeyak    : '<span class="pc-e">-</span>') + '</div>';
+    // 합계
+    h += '<div class="pc pc-t">' + (item.total    ? item.total    : '<span class="pc-e">-</span>') + '</div>';
+    h += '</div>';
+  }
+
+  h += '<div class="prod-foot"><div class="ph-l">합  계</div><div>' + tj + '</div><div>' + th + '</div><div>' + ty + '</div><div>' + tt + '</div></div>';
+  h += '</div>';
+
+  h += '<div class="legend">'
+     + '<span><span class="ldot" style="background:#aaa"></span>조각</span>'
+     + '<span><span class="ldot" style="background:#0070C0"></span>현장</span>'
+     + '<span><span class="ldot" style="background:#2d6a2d"></span>예약</span>'
+     + '</div>';
+
+  h += '<div class="hint">현장 수량은 숫자 직접 입력 후 엔터 → Google Sheets 자동 저장</div>';
+
+  document.getElementById('p1').innerHTML = h;
+}
+
+// ── 현장 수량 저장 ───────────────────────────────────────────
+async function saveQty(item, type, value) {
+  const res = await apiPost({ action: 'updateQty', item, type, value: Number(value) });
+  if (res.ok) toast('저장 완료');
+  else toast('저장 실패: ' + res.error);
+}
+
+// ── 유틸 ────────────────────────────────────────────────────
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// 초기 로드
+loadAll();
+</script>
+</body>
+</html>
