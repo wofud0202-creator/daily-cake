@@ -8,15 +8,32 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4f3ef;color:#1a1a1a;min-height:100vh;overscroll-behavior:none;}
 
+/* ── 매장 선택 ── */
+#screen-select{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:30px;}
+.sel-logo{font-size:11px;font-weight:700;color:#1F3864;letter-spacing:3px;margin-bottom:10px;opacity:.6;}
+.sel-title{font-size:24px;font-weight:700;color:#1a1a1a;margin-bottom:4px;}
+.sel-sub{font-size:13px;color:#aaa;margin-bottom:44px;}
+.sel-btn{width:100%;max-width:320px;padding:18px 20px;border:none;border-radius:14px;margin-bottom:12px;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:16px;box-shadow:0 2px 12px rgba(0,0,0,.1);transition:transform .1s;}
+.sel-btn:active{transform:scale(.97);}
+.sel-bon{background:#1F3864;color:#fff;}
+.sel-kin{background:#2d5a1b;color:#fff;}
+.sel-prod{background:#4a1a6b;color:#fff;}
+.sel-icon{font-size:28px;flex-shrink:0;}
+.sel-t1{font-size:16px;font-weight:700;}
+.sel-t2{font-size:12px;opacity:.7;margin-top:3px;}
+
+/* ── 앱 화면 ── */
+#screen-app{display:none;}
 .hd{color:#fff;padding:14px 16px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25);}
 .hd.bonjeom{background:#1F3864;}
-.hd.kintex {background:#2d5a1b;}
+.hd.kintex{background:#2d5a1b;}
 .hd.production{background:#4a1a6b;}
 .hd-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .hd-title{font-size:15px;font-weight:700;}
 .hd-store{font-size:11px;opacity:.75;margin-top:2px;}
-.refresh{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 11px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;}
-.refresh:active{opacity:.7;}
+.hd-btns{display:flex;gap:8px;}
+.hd-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 11px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;}
+.hd-btn:active{opacity:.7;}
 .tabs{display:flex;}
 .tab{flex:1;text-align:center;padding:10px 4px;font-size:12px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;}
 .tab.on{color:#fff;border-bottom-color:#FFD700;}
@@ -33,9 +50,9 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 .modal-bg.hide{display:none;}
 .modal{background:#fff;border-radius:16px;width:100%;max-width:320px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2);}
 .modal-head{color:#fff;padding:16px 20px;}
-.bonjeom .modal-head{background:#1F3864;}
-.kintex  .modal-head{background:#2d5a1b;}
-.production .modal-head{background:#4a1a6b;}
+.modal-head.bonjeom{background:#1F3864;}
+.modal-head.kintex{background:#2d5a1b;}
+.modal-head.production{background:#4a1a6b;}
 .m-title{font-size:15px;font-weight:700;}
 .m-sub{font-size:12px;opacity:.75;margin-top:3px;}
 .modal-body{padding:20px;}
@@ -46,10 +63,11 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 .modal-btns{display:flex;flex-direction:column;gap:8px;}
 .btn{width:100%;padding:13px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .12s;}
 .btn:active{transform:scale(.98);}
-.btn-confirm-bon{background:#1F3864;color:#fff;}
-.btn-confirm-kin{background:#2d5a1b;color:#fff;}
-.btn-confirm-prod{background:#4a1a6b;color:#fff;}
-.btn-cancel-action{background:#e07000;color:#fff;}
+.btn-primary{color:#fff;}
+.btn-primary.bonjeom{background:#1F3864;}
+.btn-primary.kintex{background:#2d5a1b;}
+.btn-primary.production{background:#4a1a6b;}
+.btn-danger{background:#e07000;color:#fff;}
 .btn-close{background:#f2f2f2;color:#888;}
 
 /* 탭1 픽업 */
@@ -61,9 +79,10 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 .reset-btn{width:100%;padding:9px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;font-size:12px;color:#aaa;cursor:pointer;margin-bottom:12px;font-family:inherit;}
 .reset-btn:active{background:#f5f5f5;}
 .time-group{margin-bottom:14px;}
-.time-label{font-size:14px;font-weight:700;padding:7px 12px;background:#e8edf5;border-radius:8px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;}
-.hd.kintex ~ .content .time-label{background:#e8f4e0;}
-.tl-count{font-size:11px;font-weight:500;color:#7a90b5;}
+.time-label{font-size:14px;font-weight:700;padding:7px 12px;border-radius:8px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;}
+.time-label.bonjeom{color:#1F3864;background:#e8edf5;}
+.time-label.kintex{color:#2d5a1b;background:#e8f4e0;}
+.tl-count{font-size:11px;font-weight:500;opacity:.7;}
 .bklist{display:flex;flex-direction:column;gap:6px;}
 .bk{background:#fff;border-radius:10px;padding:13px 14px;border:1.5px solid #ececec;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .15s,border-color .15s;user-select:none;}
 .bk:active{background:#f5f5f5;}
@@ -79,7 +98,7 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 .bk-item{font-size:13px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .bk-req{display:inline-block;margin-top:5px;font-size:11px;color:#b85c00;background:#fff3e0;border:1px solid #ffd8a8;padding:3px 8px;border-radius:6px;}
 .bk-time{font-size:15px;font-weight:700;flex-shrink:0;}
-.bonjeom .bk-time{color:#1F3864;}.kintex .bk-time{color:#2d5a1b;}
+.bk-time.bonjeom{color:#1F3864;}.bk-time.kintex{color:#2d5a1b;}
 .cancel-hd{font-size:11px;font-weight:700;color:#c00;margin:16px 0 7px;}
 
 /* 탭2 현장판매 */
@@ -103,14 +122,14 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 .sale-btn{padding:13px;border:none;background:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .12s;}
 .sale-btn:active{background:#f0f0f0;}
 .sale-btn-sell{border-right:1px solid #f0f0f0;}
-.bonjeom .sale-btn-sell{color:#1F3864;}.kintex .sale-btn-sell{color:#2d5a1b;}
+.sale-btn-sell.bonjeom{color:#1F3864;}.sale-btn-sell.kintex{color:#2d5a1b;}
 .sale-btn-undo{color:#e07000;}
-.prod-input{width:100%;border:2px solid #1F3864;border-radius:10px;padding:12px;font-size:28px;font-weight:700;text-align:center;color:#1F3864;font-family:inherit;outline:none;margin-bottom:4px;}
+.prod-qty-input{width:100%;border:2px solid #1F3864;border-radius:10px;padding:12px;font-size:28px;font-weight:700;text-align:center;color:#1F3864;font-family:inherit;outline:none;margin-bottom:4px;}
 .sales-reset-btn{width:100%;padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;font-size:12px;color:#aaa;cursor:pointer;font-family:inherit;}
 
-/* 탭: 생산 현황 (생산팀) */
+/* 탭: 생산현황 */
 .prod-wrap{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e8e8e8;margin-bottom:12px;}
-.prod-hd{display:grid;grid-template-columns:1fr 46px 54px 54px 54px 54px 54px;background:#4a1a6b;color:#fff;font-size:10px;font-weight:700;text-align:center;padding:10px 10px;gap:3px;}
+.prod-hd{display:grid;grid-template-columns:1fr 46px 54px 54px 54px 54px 54px;background:#4a1a6b;color:#fff;font-size:10px;font-weight:700;text-align:center;padding:10px;gap:3px;}
 .prod-hd .ph-l{text-align:left;}
 .prod-row{display:grid;grid-template-columns:1fr 46px 54px 54px 54px 54px 54px;padding:8px 10px;border-bottom:1px solid #f2f2f2;align-items:center;gap:3px;}
 .prod-row:last-child{border:none;}
@@ -127,71 +146,59 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 
 .save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1F3864;color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:999;white-space:nowrap;}
 .save-toast.show{opacity:1;}
-
-/* 매장 선택 화면 */
-.store-select{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:30px;background:#f4f3ef;}
-.store-logo{font-size:11px;font-weight:700;color:#1F3864;letter-spacing:3px;margin-bottom:8px;text-transform:uppercase;opacity:.7;}
-.store-title{font-size:24px;font-weight:700;color:#1a1a1a;margin-bottom:4px;text-align:center;}
-.store-sub{font-size:13px;color:#aaa;margin-bottom:44px;text-align:center;}
-.store-btn{width:100%;max-width:320px;padding:18px 20px;border:none;border-radius:14px;margin-bottom:12px;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:16px;transition:transform .12s;box-shadow:0 2px 12px rgba(0,0,0,.1);}
-.store-btn:active{transform:scale(.97);}
-.store-btn-bon{background:#1F3864;color:#fff;}
-.store-btn-kin{background:#2d5a1b;color:#fff;}
-.store-btn-prod{background:#4a1a6b;color:#fff;}
-.store-icon{font-size:30px;flex-shrink:0;}
-.store-text .t1{font-size:16px;font-weight:700;}
-.store-text .t2{font-size:12px;opacity:.7;margin-top:3px;}
 </style>
 </head>
 <body>
 
 <!-- 매장 선택 화면 -->
-<div class="store-select" id="store-select">
-  <div class="store-logo">La Terrasse de Paris</div>
-  <div class="store-title">매장 선택</div>
-  <div class="store-sub">접속할 매장을 선택해주세요</div>
-  <button class="store-btn store-btn-bon" onclick="selectStore('bonjeom')">
-    <div class="store-icon">🏪</div>
-    <div class="store-text"><div class="t1">본점</div><div class="t2">픽업 체크 · 현장 판매</div></div>
+<div id="screen-select">
+  <div class="sel-logo">La Terrasse de Paris</div>
+  <div class="sel-title">매장 선택</div>
+  <div class="sel-sub">접속할 매장을 선택해주세요</div>
+  <button class="sel-btn sel-bon" onclick="selectStore('bonjeom')">
+    <div class="sel-icon">🏪</div>
+    <div><div class="sel-t1">본점</div><div class="sel-t2">픽업 체크 · 현장 판매</div></div>
   </button>
-  <button class="store-btn store-btn-kin" onclick="selectStore('kintex')">
-    <div class="store-icon">🏬</div>
-    <div class="store-text"><div class="t1">킨텍스점</div><div class="t2">픽업 체크 · 현장 판매</div></div>
+  <button class="sel-btn sel-kin" onclick="selectStore('kintex')">
+    <div class="sel-icon">🏬</div>
+    <div><div class="sel-t1">킨텍스점</div><div class="sel-t2">픽업 체크 · 현장 판매</div></div>
   </button>
-  <button class="store-btn store-btn-prod" onclick="selectStore('production')">
-    <div class="store-icon">👨‍🍳</div>
-    <div class="store-text"><div class="t1">생산팀</div><div class="t2">합산 생산 현황</div></div>
+  <button class="sel-btn sel-prod" onclick="selectStore('production')">
+    <div class="sel-icon">👨‍🍳</div>
+    <div><div class="sel-t1">생산팀</div><div class="sel-t2">합산 생산 현황</div></div>
   </button>
 </div>
 
-<div class="hd" id="hd" style="display:none">
-  <div class="hd-top">
-    <div>
-      <div class="hd-title">La Terrasse de Paris</div>
-      <div class="hd-store" id="store-label"></div>
+<!-- 앱 화면 -->
+<div id="screen-app">
+  <div class="hd" id="hd">
+    <div class="hd-top">
+      <div>
+        <div class="hd-title">La Terrasse de Paris</div>
+        <div class="hd-store" id="store-label"></div>
+      </div>
+      <div class="hd-btns">
+        <button class="hd-btn" onclick="loadAll()">↻ 새로고침</button>
+        <button class="hd-btn" onclick="goBack()">매장 변경</button>
+      </div>
     </div>
-    <button class="refresh" onclick="loadAll()">↻ 새로고침</button>
-      <button class="refresh" onclick="goBack()">매장 변경</button>
-    </div>
-  <div class="tabs" id="tabs"></div>
-</div>
-
-<div class="content" id="main-content">
-  <div class="loading"><div class="spinner"></div>불러오는 중...</div>
+    <div class="tabs" id="tabs"></div>
+  </div>
+  <div class="content" id="main-content"></div>
 </div>
 
 <!-- 픽업 팝업 -->
 <div class="modal-bg hide" id="pickup-modal">
-  <div class="modal" id="pickup-modal-inner">
-    <div class="modal-head"><div class="m-title" id="pm-name"></div><div class="m-sub" id="pm-sub"></div></div>
+  <div class="modal">
+    <div class="modal-head" id="pm-head"><div class="m-title" id="pm-name"></div><div class="m-sub" id="pm-sub"></div></div>
     <div class="modal-body"><div class="modal-btns" id="pm-btns"></div></div>
   </div>
 </div>
 
 <!-- 판매 팝업 -->
 <div class="modal-bg hide" id="sale-modal">
-  <div class="modal" id="sale-modal-inner">
-    <div class="modal-head"><div class="m-title" id="sm-title"></div><div class="m-sub" id="sm-sub"></div></div>
+  <div class="modal">
+    <div class="modal-head" id="sm-head"><div class="m-title" id="sm-title"></div><div class="m-sub" id="sm-sub"></div></div>
     <div class="modal-body">
       <div class="modal-info">현재 판매: <span id="sm-cur"></span>개</div>
       <div class="modal-arrow">→ <b id="sm-next"></b>개</div>
@@ -201,14 +208,14 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 </div>
 
 <!-- 생산수량 팝업 -->
-<div class="modal-bg hide" id="prod-modal">
-  <div class="modal" id="prod-modal-inner">
-    <div class="modal-head"><div class="m-title" id="prm-name"></div><div class="m-sub">생산수량 수정</div></div>
+<div class="modal-bg hide" id="prm-modal">
+  <div class="modal">
+    <div class="modal-head" id="prm-head"><div class="m-title" id="prm-name"></div><div class="m-sub">생산수량 수정</div></div>
     <div class="modal-body">
-      <input class="prod-input" type="number" min="0" id="prm-input">
+      <input class="prod-qty-input" type="number" min="0" id="prm-input">
       <div class="modal-btns" style="margin-top:12px;">
-        <button class="btn" id="prm-save-btn" onclick="saveProdQty()">저장</button>
-        <button class="btn btn-close" onclick="closeModal('prod-modal')">닫기</button>
+        <button class="btn btn-primary" id="prm-save" onclick="saveProdQty()">저장</button>
+        <button class="btn btn-close" onclick="closeModal('prm-modal')">닫기</button>
       </div>
     </div>
   </div>
@@ -217,79 +224,72 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 <div class="save-toast" id="toast"></div>
 
 <script>
-// ★ GAS 웹앱 URL 입력 ★
-const API_URL = 'https://script.google.com/macros/s/AKfycbzOi7YWHBOfdFaWuyl5XeV2Rx3qHsUKX_mckooJuv9kCqpNwHcKiGiBP8V4Yre2p_Iylg/exec';
+const API_URL = 'YOUR_GAS_WEBAPP_URL_HERE';
 
-// 매장 선택
-let STORE = sessionStorage.getItem('selected_store') || new URLSearchParams(location.search).get('store') || '';
+const STORE_CONFIG = {
+  bonjeom:    { label:'본점',   cls:'bonjeom', tabs:['픽업 체크','현장 판매'] },
+  kintex:     { label:'킨텍스점', cls:'kintex',  tabs:['픽업 체크','현장 판매'] },
+  production: { label:'생산팀', cls:'production', tabs:['생산 현황'] },
+};
 
+let STORE = '';
+let CFG   = null;
+let appData=null, pickStatus={}, salesData=[], prodData=null;
+let curSaleItem=null, curProdItem=null;
+
+// ── 매장 선택 ────────────────────────────────────────────────────
 function selectStore(store) {
   STORE = store;
-  sessionStorage.setItem('selected_store', store);
-  document.getElementById('store-select').style.display = 'none';
-  document.getElementById('hd').style.display = 'block';
-  document.getElementById('main-content').style.display = 'block';
-  initApp();
-}
+  CFG   = STORE_CONFIG[store];
+  sessionStorage.setItem('store', store);
 
-function goBack() {
-  sessionStorage.removeItem('selected_store');
-  STORE = '';
-  document.getElementById('store-select').style.display = 'flex';
-  document.getElementById('hd').style.display = 'none';
-  document.getElementById('main-content').style.display = 'none';
-}
+  // 화면 전환
+  document.getElementById('screen-select').style.display = 'none';
+  document.getElementById('screen-app').style.display    = 'block';
 
-// 매장별 설정
-const STORE_CONFIG = {
-  bonjeom:    { label:'본점', color:'#1F3864', tabs:['픽업 체크','현장 판매'] },
-  kintex:     { label:'킨텍스점', color:'#2d5a1b', tabs:['픽업 체크','현장 판매'] },
-  production: { label:'생산팀', color:'#4a1a6b', tabs:['생산 현황'] },
-};
-const CFG = STORE_CONFIG[STORE] || STORE_CONFIG.bonjeom;
-
-let appData    = null;
-let pickStatus = {};
-let salesData  = [];
-let prodData   = null;
-let curSaleItem = null, curProdItem = null;
-
-// ── 초기화 ───────────────────────────────────────────────────────
-function initApp() {
-(function init() {
+  // 헤더 색상
   const hd = document.getElementById('hd');
-  hd.className = 'hd ' + STORE;
+  hd.className = 'hd ' + CFG.cls;
   document.getElementById('store-label').textContent = CFG.label;
-  document.title = 'La Terrasse — ' + CFG.label;
 
-  // 팝업 모달 색상 클래스
-  ['pickup-modal-inner','sale-modal-inner','prod-modal-inner'].forEach(id => {
+  // 팝업 헤더 색상
+  ['pm-head','sm-head','prm-head'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.classList.add(STORE);
+    if (el) { el.className = 'modal-head ' + CFG.cls; }
   });
+
+  // 저장 버튼 색상
+  const prmSave = document.getElementById('prm-save');
+  if (prmSave) prmSave.className = 'btn btn-primary ' + CFG.cls;
 
   // 탭 생성
   const tabsEl = document.getElementById('tabs');
-  CFG.tabs.forEach((name, i) => {
-    const t = document.createElement('div');
-    t.className = 'tab' + (i===0?' on':'');
-    t.textContent = name;
-    t.onclick = () => switchTab(i);
-    tabsEl.appendChild(t);
-  });
-
-  // 메인 컨텐츠 패널 생성
-  const mc = document.getElementById('main-content');
-  mc.innerHTML = CFG.tabs.map((_, i) =>
-    `<div class="panel ${i===0?'on':''}" id="p${i}"><div class="loading"><div class="spinner"></div>불러오는 중...</div></div>`
+  tabsEl.innerHTML = CFG.tabs.map((name,i) =>
+    `<div class="tab${i===0?' on':''}" onclick="switchTab(${i})">${name}</div>`
   ).join('');
 
-  // 확인 버튼 색상
-  const confirmBtnClass = STORE === 'kintex' ? 'btn-confirm-kin' : STORE === 'production' ? 'btn-confirm-prod' : 'btn-confirm-bon';
-  document.getElementById('prm-save-btn').className = 'btn ' + confirmBtnClass;
+  // 패널 생성
+  document.getElementById('main-content').innerHTML = CFG.tabs.map((_,i) =>
+    `<div class="panel${i===0?' on':''}" id="p${i}"><div class="loading"><div class="spinner"></div>불러오는 중...</div></div>`
+  ).join('');
+
+  loadAll();
+}
+
+function goBack() {
+  sessionStorage.removeItem('store');
+  STORE = '';
+  document.getElementById('screen-app').style.display    = 'none';
+  document.getElementById('screen-select').style.display = 'flex';
+}
+
+// 이전에 선택한 매장 복원
+(function() {
+  const saved = sessionStorage.getItem('store');
+  if (saved && STORE_CONFIG[saved]) selectStore(saved);
 })();
 
-// ── 유틸 ────────────────────────────────────────────────────────
+// ── 공통 유틸 ────────────────────────────────────────────────────
 function switchTab(i) {
   document.querySelectorAll('.tab').forEach((t,j)   => t.classList.toggle('on', i===j));
   document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('on', i===j));
@@ -309,9 +309,6 @@ function closeModal(id) { document.getElementById(id).classList.add('hide'); }
 function openModal(id)  { document.getElementById(id).classList.remove('hide'); }
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-function confirmBtnClass() {
-  return STORE==='kintex'?'btn-confirm-kin':STORE==='production'?'btn-confirm-prod':'btn-confirm-bon';
 }
 
 // ── 전체 로드 ────────────────────────────────────────────────────
@@ -361,27 +358,27 @@ function renderPickup() {
     + '</div>';
   h += '<button class="reset-btn" onclick="resetPickup()">픽업 상태 전체 초기화</button>';
 
-  if (conf.length === 0) {
-    h += '<div style="text-align:center;padding:40px 20px;color:#aaa;font-size:13px;">예약 데이터가 없습니다.<br>Google Sheets에서 파일을 업로드해주세요.</div>';
+  if (!conf.length) {
+    h += '<div style="text-align:center;padding:40px;color:#aaa;font-size:13px;">예약 데이터가 없습니다.<br>Google Sheets에서 파일을 업로드해주세요.</div>';
     document.getElementById('p0').innerHTML = h;
     return;
   }
 
   const groups = {};
   for (const b of conf) {
-    const t = b.pickup || '미정';
-    if (!groups[t]) groups[t] = [];
+    const t = b.pickup||'미정';
+    if (!groups[t]) groups[t]=[];
     groups[t].push(b);
   }
-  const sortedTimes = Object.keys(groups).sort((a,b) =>
-    (groups[a][0].pickupNum??9999) - (groups[b][0].pickupNum??9999)
+  const sorted = Object.keys(groups).sort((a,b)=>
+    (groups[a][0].pickupNum??9999)-(groups[b][0].pickupNum??9999)
   );
 
-  for (const time of sortedTimes) {
+  for (const time of sorted) {
     const bks     = groups[time];
-    const grpDone = bks.filter(b => pickStatus[b.name+'_'+b.pickup]).length;
+    const grpDone = bks.filter(b=>pickStatus[b.name+'_'+b.pickup]).length;
     h += '<div class="time-group">'
-       + '<div class="time-label"><span>'+esc(time)+'</span><span class="tl-count">'+grpDone+' / '+bks.length+' 완료</span></div>'
+       + '<div class="time-label '+CFG.cls+'"><span>'+esc(time)+'</span><span class="tl-count">'+grpDone+' / '+bks.length+' 완료</span></div>'
        + '<div class="bklist">';
     for (const b of bks) {
       const key  = b.name+'_'+b.pickup;
@@ -395,7 +392,7 @@ function renderPickup() {
          + '<div class="bk-item">'+esc(b.item)+'</div>'
          + (b.request?'<div class="bk-req">📝 '+esc(b.request)+'</div>':'')
          + '</div>'
-         + '<div class="bk-time">'+esc(b.pickup)+'</div>'
+         + '<div class="bk-time '+CFG.cls+'">'+esc(b.pickup)+'</div>'
          + '</div>';
     }
     h += '</div></div>';
@@ -414,48 +411,47 @@ function renderPickup() {
   document.getElementById('p0').innerHTML = h;
 }
 
-function statCard(n, label, cls) {
+function statCard(n,label,cls){
   return '<div class="stat"><div class="n '+cls+'">'+n+'</div><div class="l">'+label+'</div></div>';
 }
 
 function openPickupModal(key) {
-  const b = (appData.bookings||[]).find(b => b.name+'_'+b.pickup === key);
+  const b = (appData.bookings||[]).find(b=>b.name+'_'+b.pickup===key);
   if (!b) return;
   const isDone = !!pickStatus[key];
   document.getElementById('pm-name').textContent = b.name;
-  document.getElementById('pm-sub').textContent  = b.item + ' · ' + b.pickup + (b.bonaeng==='O'?' · 보냉백':'');
-  const cc = confirmBtnClass();
-  document.getElementById('pm-btns').innerHTML = isDone
-    ? '<button class="btn btn-cancel-action" onclick="applyPickup(\''+esc(key)+'\',false)">↩ 완료 취소</button><button class="btn btn-close" onclick="closeModal(\'pickup-modal\')">닫기</button>'
-    : '<button class="btn '+cc+'" onclick="applyPickup(\''+esc(key)+'\',true)">✓ 픽업 완료</button><button class="btn btn-close" onclick="closeModal(\'pickup-modal\')">닫기</button>';
+  document.getElementById('pm-sub').textContent  = b.item+' · '+b.pickup+(b.bonaeng==='O'?' · 보냉백':'');
+  document.getElementById('pm-btns').innerHTML   = isDone
+    ? '<button class="btn btn-danger" onclick="applyPickup(\''+esc(key)+'\',false)">↩ 완료 취소</button><button class="btn btn-close" onclick="closeModal(\'pickup-modal\')">닫기</button>'
+    : '<button class="btn btn-primary '+CFG.cls+'" onclick="applyPickup(\''+esc(key)+'\',true)">✓ 픽업 완료</button><button class="btn btn-close" onclick="closeModal(\'pickup-modal\')">닫기</button>';
   openModal('pickup-modal');
 }
 
-function applyPickup(key, newVal) {
+function applyPickup(key, v) {
   closeModal('pickup-modal');
-  pickStatus[key] = newVal;
+  pickStatus[key] = v;
   const card = document.getElementById('bk-'+key);
   const icon = document.getElementById('icon-'+key);
-  if (card) card.classList.toggle('done', newVal);
-  if (icon) { icon.className='bk-icon '+(newVal?'done':'wait'); icon.textContent=newVal?'✓':'○'; }
-  const conf = (appData.bookings||[]).filter(b => !b.cancelled);
-  const done = conf.filter(b => pickStatus[b.name+'_'+b.pickup]).length;
-  document.querySelector('.n-done').textContent = done;
-  document.querySelector('.n-wait').textContent = conf.length - done;
-  document.querySelectorAll('.time-group').forEach(grp => {
-    const els = grp.querySelectorAll('.bk[id]');
-    const gdone = [...els].filter(el => pickStatus[el.id.replace('bk-','')]).length;
-    const cnt = grp.querySelector('.tl-count');
-    if (cnt) cnt.textContent = gdone+' / '+els.length+' 완료';
+  if (card) card.classList.toggle('done',v);
+  if (icon) { icon.className='bk-icon '+(v?'done':'wait'); icon.textContent=v?'✓':'○'; }
+  const conf = (appData.bookings||[]).filter(b=>!b.cancelled);
+  const done = conf.filter(b=>pickStatus[b.name+'_'+b.pickup]).length;
+  document.querySelector('.n-done').textContent=done;
+  document.querySelector('.n-wait').textContent=conf.length-done;
+  document.querySelectorAll('.time-group').forEach(grp=>{
+    const els=[...grp.querySelectorAll('.bk[id]')];
+    const gd=els.filter(el=>pickStatus[el.id.replace('bk-','')]).length;
+    const cnt=grp.querySelector('.tl-count');
+    if(cnt)cnt.textContent=gd+' / '+els.length+' 완료';
   });
-  toast(newVal ? '✓ 픽업 완료' : '↩ 픽업 취소');
-  api({ action:'setPickup', key, checked: newVal });
+  toast(v?'✓ 픽업 완료':'↩ 픽업 취소');
+  api({action:'setPickup',key,checked:v});
 }
 
-async function resetPickup() {
-  if (!confirm('픽업 상태를 전체 초기화할까요?')) return;
-  pickStatus = {};
-  await api({ action:'resetPickup' });
+async function resetPickup(){
+  if(!confirm('픽업 상태를 전체 초기화할까요?'))return;
+  pickStatus={};
+  await api({action:'resetPickup'});
   renderPickup();
   toast('초기화 완료');
 }
@@ -463,102 +459,101 @@ async function resetPickup() {
 // ════════════════════════════════════════════════════════════════
 // 현장 판매
 // ════════════════════════════════════════════════════════════════
-function renderSales() {
-  const panelIdx = CFG.tabs.indexOf('현장 판매');
-  if (panelIdx < 0) return;
-  const panel = document.getElementById('p'+panelIdx);
+function renderSales(){
+  const idx = CFG.tabs.indexOf('현장 판매');
+  if(idx<0)return;
+  const panel=document.getElementById('p'+idx);
 
-  if (!salesData.length) {
-    panel.innerHTML = '<div class="err">현장판매 시트가 없습니다.<br>Google Sheets에 <b>현장판매_'+(STORE==='kintex'?'킨텍스':'본점')+'</b> 시트를 만들어주세요.</div>';
+  if(!salesData.length){
+    panel.innerHTML='<div class="err">현장판매 시트가 없습니다.<br>Google Sheets에 <b>현장판매_'+(STORE==='kintex'?'킨텍스':'본점')+'</b> 시트를 만들어주세요.</div>';
     return;
   }
 
-  const tProd   = salesData.reduce((s,i)=>s+i.production,0);
-  const tSold   = salesData.reduce((s,i)=>s+i.sold,0);
-  const tRemain = tProd - tSold;
+  const tP=salesData.reduce((s,i)=>s+i.production,0);
+  const tS=salesData.reduce((s,i)=>s+i.sold,0);
+  const tR=tP-tS;
 
-  let h = '<div class="sales-summary">'
-    + '<div class="sales-card"><div class="sn sn-prod">'+tProd+'</div><div class="sl">총 생산</div></div>'
-    + '<div class="sales-card"><div class="sn sn-sold">'+tSold+'</div><div class="sl">총 판매</div></div>'
-    + '<div class="sales-card"><div class="sn sn-remain">'+tRemain+'</div><div class="sl">총 잔여</div></div>'
-    + '</div><div class="sale-list">';
+  let h='<div class="sales-summary">'
+    +'<div class="sales-card"><div class="sn sn-prod">'+tP+'</div><div class="sl">총 생산</div></div>'
+    +'<div class="sales-card"><div class="sn sn-sold">'+tS+'</div><div class="sl">총 판매</div></div>'
+    +'<div class="sales-card"><div class="sn sn-remain">'+tR+'</div><div class="sl">총 잔여</div></div>'
+    +'</div><div class="sale-list">';
 
-  for (const item of salesData) {
-    const remain = item.production - item.sold;
-    const low    = remain <= 2 && item.production > 0;
-    h += '<div class="sale-item">'
-       + '<div class="sale-item-head"><span class="sale-name">'+esc(item.name)+'</span>'
-       + '<button class="sale-edit-btn" onclick="openProdModal(\''+esc(item.name)+'\','+item.production+')">✏ 생산수량</button></div>'
-       + '<div class="sale-nums">'
-       + '<div class="sale-num"><div class="val val-prod">'+item.production+'</div><div class="lbl">생산</div></div>'
-       + '<div class="sale-num"><div class="val val-sold">'+item.sold+'</div><div class="lbl">판매</div></div>'
-       + '<div class="sale-num"><div class="val val-remain'+(low?' low':'')+'">'+remain+'</div><div class="lbl">잔여'+(low?' ⚠':'')+'</div></div>'
-       + '</div>'
-       + '<div class="sale-btns">'
-       + '<button class="sale-btn sale-btn-sell" onclick="openSaleModal(\''+esc(item.name)+'\',\'sell\')">판매</button>'
-       + '<button class="sale-btn sale-btn-undo" onclick="openSaleModal(\''+esc(item.name)+'\',\'undo\')">취소</button>'
-       + '</div></div>';
+  for(const item of salesData){
+    const remain=item.production-item.sold;
+    const low=remain<=2&&item.production>0;
+    h+='<div class="sale-item">'
+      +'<div class="sale-item-head"><span class="sale-name">'+esc(item.name)+'</span>'
+      +'<button class="sale-edit-btn" onclick="openProdModal(\''+esc(item.name)+'\','+item.production+')">✏ 생산수량</button></div>'
+      +'<div class="sale-nums">'
+      +'<div class="sale-num"><div class="val val-prod">'+item.production+'</div><div class="lbl">생산</div></div>'
+      +'<div class="sale-num"><div class="val val-sold">'+item.sold+'</div><div class="lbl">판매</div></div>'
+      +'<div class="sale-num"><div class="val val-remain'+(low?' low':'')+'">'+remain+'</div><div class="lbl">잔여'+(low?' ⚠':'')+'</div></div>'
+      +'</div>'
+      +'<div class="sale-btns">'
+      +'<button class="sale-btn sale-btn-sell '+CFG.cls+'" onclick="openSaleModal(\''+esc(item.name)+'\',\'sell\')">판매</button>'
+      +'<button class="sale-btn sale-btn-undo" onclick="openSaleModal(\''+esc(item.name)+'\',\'undo\')">취소</button>'
+      +'</div></div>';
   }
-  h += '</div><button class="sales-reset-btn" id="sreset" onclick="handleSalesReset()">판매 수량 초기화 (길게 누르기)</button>';
-  panel.innerHTML = h;
-  setupLongPress(document.getElementById('sreset'), doSalesReset);
+  h+='</div><button class="sales-reset-btn" id="sreset" onclick="handleSalesReset()">판매 수량 초기화 (길게 누르기)</button>';
+  panel.innerHTML=h;
+  setupLongPress(document.getElementById('sreset'),doSalesReset);
 }
 
-function openSaleModal(itemName, mode) {
-  const item = salesData.find(i=>i.name===itemName);
-  if (!item) return;
-  curSaleItem = { name:itemName, mode };
-  const isSell = mode==='sell';
-  const next   = isSell ? item.sold+1 : Math.max(0,item.sold-1);
-  document.getElementById('sm-title').textContent = itemName+(isSell?' 판매':' 취소');
-  document.getElementById('sm-sub').textContent   = isSell?'1개 판매 처리':'1개 판매 취소';
-  document.getElementById('sm-cur').textContent   = item.sold;
-  document.getElementById('sm-next').textContent  = next;
-  const cc = confirmBtnClass();
-  document.getElementById('sm-btns').innerHTML = isSell
-    ? '<button class="btn '+cc+'" onclick="confirmSale()">판매 완료</button><button class="btn btn-close" onclick="closeModal(\'sale-modal\')">닫기</button>'
-    : '<button class="btn btn-cancel-action" onclick="confirmSale()">취소 확인</button><button class="btn btn-close" onclick="closeModal(\'sale-modal\')">닫기</button>';
+function openSaleModal(itemName,mode){
+  const item=salesData.find(i=>i.name===itemName);
+  if(!item)return;
+  curSaleItem={name:itemName,mode};
+  const isSell=mode==='sell';
+  const next=isSell?item.sold+1:Math.max(0,item.sold-1);
+  document.getElementById('sm-title').textContent=itemName+(isSell?' 판매':' 취소');
+  document.getElementById('sm-sub').textContent=isSell?'1개 판매 처리':'1개 판매 취소';
+  document.getElementById('sm-cur').textContent=item.sold;
+  document.getElementById('sm-next').textContent=next;
+  document.getElementById('sm-btns').innerHTML=isSell
+    ?'<button class="btn btn-primary '+CFG.cls+'" onclick="confirmSale()">판매 완료</button><button class="btn btn-close" onclick="closeModal(\'sale-modal\')">닫기</button>'
+    :'<button class="btn btn-danger" onclick="confirmSale()">취소 확인</button><button class="btn btn-close" onclick="closeModal(\'sale-modal\')">닫기</button>';
   openModal('sale-modal');
 }
 
-async function confirmSale() {
+async function confirmSale(){
   closeModal('sale-modal');
-  if (!curSaleItem) return;
-  const item    = salesData.find(i=>i.name===curSaleItem.name);
-  if (!item) return;
-  const isSell  = curSaleItem.mode==='sell';
-  const newSold = isSell ? item.sold+1 : Math.max(0,item.sold-1);
-  item.sold = newSold;
+  if(!curSaleItem)return;
+  const item=salesData.find(i=>i.name===curSaleItem.name);
+  if(!item)return;
+  const isSell=curSaleItem.mode==='sell';
+  const newSold=isSell?item.sold+1:Math.max(0,item.sold-1);
+  item.sold=newSold;
   renderSales();
-  const res = await api({ action:'setSaleQty', item:curSaleItem.name, field:'sold', value:newSold });
-  if (res.ok) toast(isSell?'판매 완료 ✓':'취소 완료');
-  else { toast('저장 실패'); item.sold=isSell?newSold-1:newSold+1; renderSales(); }
-  curSaleItem = null;
+  const res=await api({action:'setSaleQty',item:curSaleItem.name,field:'sold',value:newSold});
+  if(res.ok)toast(isSell?'판매 완료 ✓':'취소 완료');
+  else{toast('저장 실패');item.sold=isSell?newSold-1:newSold+1;renderSales();}
+  curSaleItem=null;
 }
 
-function openProdModal(itemName, cur) {
-  curProdItem = itemName;
-  document.getElementById('prm-name').textContent = itemName;
-  document.getElementById('prm-input').value = cur;
-  openModal('prod-modal');
+function openProdModal(itemName,cur){
+  curProdItem=itemName;
+  document.getElementById('prm-name').textContent=itemName;
+  document.getElementById('prm-input').value=cur;
+  openModal('prm-modal');
   setTimeout(()=>document.getElementById('prm-input').select(),100);
 }
-async function saveProdQty() {
-  const val = Number(document.getElementById('prm-input').value)||0;
-  closeModal('prod-modal');
-  const item = salesData.find(i=>i.name===curProdItem);
-  if (item) item.production=val;
+async function saveProdQty(){
+  const val=Number(document.getElementById('prm-input').value)||0;
+  closeModal('prm-modal');
+  const item=salesData.find(i=>i.name===curProdItem);
+  if(item)item.production=val;
   renderSales();
-  const res = await api({ action:'setSaleQty', item:curProdItem, field:'production', value:val });
+  const res=await api({action:'setSaleQty',item:curProdItem,field:'production',value:val});
   toast(res.ok?'생산수량 저장 ✓':'저장 실패: '+(res.error||''));
   curProdItem=null;
 }
 
-let longPressTimer=null;
+let lpTimer=null;
 function setupLongPress(el,cb){
-  el.addEventListener('touchstart',()=>{longPressTimer=setTimeout(()=>{cb();longPressTimer=null;},1500);},{passive:true});
-  el.addEventListener('touchend',  ()=>{if(longPressTimer){clearTimeout(longPressTimer);longPressTimer=null;}});
-  el.addEventListener('touchmove', ()=>{if(longPressTimer){clearTimeout(longPressTimer);longPressTimer=null;}});
+  el.addEventListener('touchstart',()=>{lpTimer=setTimeout(()=>{cb();lpTimer=null;},1500);},{passive:true});
+  el.addEventListener('touchend',  ()=>{if(lpTimer){clearTimeout(lpTimer);lpTimer=null;}});
+  el.addEventListener('touchmove', ()=>{if(lpTimer){clearTimeout(lpTimer);lpTimer=null;}});
 }
 function handleSalesReset(){toast('길게 누르면 초기화됩니다 (1.5초)');}
 async function doSalesReset(){
@@ -571,41 +566,41 @@ async function doSalesReset(){
 // ════════════════════════════════════════════════════════════════
 // 생산 현황 (생산팀)
 // ════════════════════════════════════════════════════════════════
-function renderProd() {
-  const items = prodData.items || [];
+function renderProd(){
+  const items=prodData.items||[];
   let tj=0,thb=0,thk=0,tyb=0,tyk=0,tt=0;
 
-  let h = '<div class="prod-wrap">'
-        + '<div class="prod-hd"><div class="ph-l">품목</div><div>조각</div><div>현장(본)</div><div>현장(킨)</div><div>예약(본)</div><div>예약(킨)</div><div>합계</div></div>';
+  let h='<div class="prod-wrap">'
+      +'<div class="prod-hd"><div class="ph-l">품목</div><div>조각</div><div>현장(본)</div><div>현장(킨)</div><div>예약(본)</div><div>예약(킨)</div><div>합계</div></div>';
 
-  for (const item of items) {
-    tj +=item.jogak; thb+=item.hyunjang_bon; thk+=item.hyunjang_kin;
-    tyb+=item.yeyak_bon; tyk+=item.yeyak_kin; tt+=item.total;
-    const nd = item.total===0;
-    h += '<div class="prod-row">'
-       + '<div class="pname'+(nd?' dim':'')+'">'+esc(item.name)+'</div>'
-       + qtyCell(item.name,'jogak',       item.jogak)
-       + qtyCell(item.name,'hyunjang_bon',item.hyunjang_bon)
-       + qtyCell(item.name,'hyunjang_kin',item.hyunjang_kin)
-       + '<div class="pc pc-bon">'+(item.yeyak_bon?item.yeyak_bon:'<span class="pc-e">-</span>')+'</div>'
-       + '<div class="pc pc-kin">'+(item.yeyak_kin?item.yeyak_kin:'<span class="pc-e">-</span>')+'</div>'
-       + '<div class="pc pc-t">'+(item.total?item.total:'<span class="pc-e">-</span>')+'</div>'
-       + '</div>';
+  for(const item of items){
+    tj+=item.jogak;thb+=item.hyunjang_bon;thk+=item.hyunjang_kin;
+    tyb+=item.yeyak_bon;tyk+=item.yeyak_kin;tt+=item.total;
+    const nd=item.total===0;
+    h+='<div class="prod-row">'
+      +'<div class="pname'+(nd?' dim':'')+'">'+esc(item.name)+'</div>'
+      +qtyCell(item.name,'jogak',item.jogak)
+      +qtyCell(item.name,'hyunjang_bon',item.hyunjang_bon)
+      +qtyCell(item.name,'hyunjang_kin',item.hyunjang_kin)
+      +'<div class="pc pc-bon">'+(item.yeyak_bon?item.yeyak_bon:'<span class="pc-e">-</span>')+'</div>'
+      +'<div class="pc pc-kin">'+(item.yeyak_kin?item.yeyak_kin:'<span class="pc-e">-</span>')+'</div>'
+      +'<div class="pc pc-t">'+(item.total?item.total:'<span class="pc-e">-</span>')+'</div>'
+      +'</div>';
   }
-  h += '<div class="prod-foot"><div class="ph-l">합  계</div><div>'+tj+'</div><div>'+thb+'</div><div>'+thk+'</div><div>'+tyb+'</div><div>'+tyk+'</div><div>'+tt+'</div></div></div>'
-     + '<div class="legend">'
-     + '<span><span class="ldot" style="background:#aaa"></span>조각</span>'
-     + '<span><span class="ldot" style="background:#888"></span>현장(본)</span>'
-     + '<span><span class="ldot" style="background:#555"></span>현장(킨)</span>'
-     + '<span><span class="ldot" style="background:#0070C0"></span>예약(본)</span>'
-     + '<span><span class="ldot" style="background:#2d6a2d"></span>예약(킨)</span>'
-     + '</div>';
-  document.getElementById('p0').innerHTML = h;
+  h+='<div class="prod-foot"><div class="ph-l">합  계</div><div>'+tj+'</div><div>'+thb+'</div><div>'+thk+'</div><div>'+tyb+'</div><div>'+tyk+'</div><div>'+tt+'</div></div></div>'
+    +'<div class="legend">'
+    +'<span><span class="ldot" style="background:#aaa"></span>조각</span>'
+    +'<span><span class="ldot" style="background:#888"></span>현장(본)</span>'
+    +'<span><span class="ldot" style="background:#555"></span>현장(킨)</span>'
+    +'<span><span class="ldot" style="background:#0070C0"></span>예약(본)</span>'
+    +'<span><span class="ldot" style="background:#2d6a2d"></span>예약(킨)</span>'
+    +'</div>';
+  document.getElementById('p0').innerHTML=h;
 }
 
-function qtyCell(name, type, val) {
+function qtyCell(name,type,val){
   return '<div><input class="qty-sm" type="number" min="0" value="'+(val||'')+'"'
-       + ' onchange="saveQty(\''+esc(name)+'\',\''+type+'\',this.value,this)" onfocus="this.select()"></div>';
+        +' onchange="saveQty(\''+esc(name)+'\',\''+type+'\',this.value,this)" onfocus="this.select()"></div>';
 }
 async function saveQty(item,type,value,el){
   el.style.opacity='.5';
@@ -615,27 +610,11 @@ async function saveQty(item,type,value,el){
     toast('저장 완료 ✓');
     const t=prodData.items.find(i=>i.name===item);
     if(t){t[type]=Number(value);t.total=t.jogak+t.hyunjang_bon+t.hyunjang_kin+t.yeyak_bon+t.yeyak_kin;}
-    updateProdFooter();
+    const c=document.querySelectorAll('.prod-foot div');
+    let tj=0,thb=0,thk=0,tyb=0,tyk=0,tt=0;
+    for(const i of prodData.items){tj+=i.jogak;thb+=i.hyunjang_bon;thk+=i.hyunjang_kin;tyb+=i.yeyak_bon;tyk+=i.yeyak_kin;tt+=i.total;}
+    [tj,thb,thk,tyb,tyk,tt].forEach((v,i)=>{if(c[i+1])c[i+1].textContent=v;});
   }else toast('저장 실패: '+(res.error||''));
-}
-function updateProdFooter(){
-  const items=prodData.items||[];
-  let tj=0,thb=0,thk=0,tyb=0,tyk=0,tt=0;
-  for(const i of items){tj+=i.jogak;thb+=i.hyunjang_bon;thk+=i.hyunjang_kin;tyb+=i.yeyak_bon;tyk+=i.yeyak_kin;tt+=i.total;}
-  const c=document.querySelectorAll('.prod-foot div');
-  [tj,thb,thk,tyb,tyk,tt].forEach((v,i)=>{if(c[i+1])c[i+1].textContent=v;});
-}
-
-}); // end init
-
-// 초기 실행
-if (STORE) {
-  document.getElementById('store-select').style.display = 'none';
-  document.getElementById('hd').style.display = 'block';
-  document.getElementById('main-content').style.display = 'block';
-  initApp();
-} else {
-  document.getElementById('main-content').style.display = 'none';
 }
 </script>
 </body>
