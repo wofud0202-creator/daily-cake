@@ -8,6 +8,7 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4f3ef;color:#1a1a1a;min-height:100vh;overscroll-behavior:none;}
 
+/* ── 헤더 ── */
 .hd{background:#1F3864;color:#fff;padding:14px 16px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25);}
 .hd-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .hd-title{font-size:15px;font-weight:700;}
@@ -15,74 +16,67 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 .refresh{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 11px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;}
 .refresh:active{opacity:.7;}
 .tabs{display:flex;}
-.tab{flex:1;text-align:center;padding:10px 4px;font-size:13px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;}
+.tab{flex:1;text-align:center;padding:10px 4px;font-size:12px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;}
 .tab.on{color:#fff;border-bottom-color:#FFD700;}
 
+/* ── 공통 ── */
 .content{padding:14px;max-width:680px;margin:0 auto;}
 .panel{display:none;}.panel.on{display:block;}
-
 .loading{text-align:center;padding:60px 20px;color:#aaa;font-size:13px;}
 .spinner{width:28px;height:28px;border:3px solid #e0e0e0;border-top-color:#1F3864;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .err{background:#fff0f0;border:1px solid #fcc;border-radius:10px;padding:20px;text-align:center;color:#c00;font-size:13px;margin-top:16px;line-height:1.8;}
 
-/* ── 탭1: 픽업 체크 ── */
+/* ── 팝업 공통 ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-bg.hide{display:none;}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:320px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2);}
+.modal-head{background:#1F3864;color:#fff;padding:16px 20px;}
+.modal-head .m-title{font-size:15px;font-weight:700;}
+.modal-head .m-sub{font-size:12px;opacity:.75;margin-top:3px;}
+.modal-body{padding:20px;}
+.modal-info{font-size:13px;color:#555;margin-bottom:6px;}
+.modal-info span{font-weight:700;color:#1a1a1a;}
+.modal-arrow{font-size:13px;color:#888;margin-bottom:16px;}
+.modal-arrow b{color:#1F3864;font-size:15px;}
+.modal-btns{display:flex;flex-direction:column;gap:8px;}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .12s;}
+.btn:active{transform:scale(.98);}
+.btn-confirm{background:#1F3864;color:#fff;}
+.btn-cancel-action{background:#e07000;color:#fff;}
+.btn-close{background:#f2f2f2;color:#888;}
+
+/* ── 탭1: 픽업 ── */
 .stat-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
 .stat{background:#fff;border-radius:10px;padding:10px 8px;text-align:center;border:1px solid #eee;}
 .stat .n{font-size:24px;font-weight:700;line-height:1.1;}
 .stat .l{font-size:11px;color:#999;margin-top:2px;}
 .n-done{color:#2d6a2d;}.n-wait{color:#1F3864;}.n-all{color:#888;}
-
 .reset-btn{width:100%;padding:9px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;font-size:12px;color:#aaa;cursor:pointer;margin-bottom:12px;font-family:inherit;}
 .reset-btn:active{background:#f5f5f5;}
 
-.swipe-hint{font-size:11px;color:#aaa;text-align:center;margin-bottom:10px;}
-
-/* 시간대 그룹 */
 .time-group{margin-bottom:14px;}
 .time-label{font-size:14px;font-weight:700;color:#1F3864;padding:7px 12px;background:#e8edf5;border-radius:8px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;}
 .tl-count{font-size:11px;font-weight:500;color:#7a90b5;}
 
 .bklist{display:flex;flex-direction:column;gap:6px;}
-
-/* 스와이프 카드 컨테이너 */
-.bk-wrap{position:relative;border-radius:10px;overflow:hidden;}
-
-/* 뒤에 깔리는 완료/취소 배경 */
-.bk-bg{
-  position:absolute;inset:0;
-  display:flex;align-items:center;
-  border-radius:10px;
-  pointer-events:none;
-}
-.bk-bg-done{background:#2d6a2d;justify-content:flex-start;padding-left:20px;}
-.bk-bg-undo{background:#e07000;justify-content:flex-end;padding-right:20px;}
-.bk-bg span{color:#fff;font-size:13px;font-weight:700;}
-
-/* 실제 카드 */
-.bk{
-  position:relative;z-index:1;
-  background:#fff;border-radius:10px;padding:12px 14px;
-  border:1.5px solid #ececec;
-  display:flex;align-items:flex-start;gap:12px;
-  transition:transform .15s ease, border-color .2s, background .2s;
-  user-select:none;touch-action:pan-y;
-  will-change:transform;
-}
+.bk{background:#fff;border-radius:10px;padding:13px 14px;border:1.5px solid #ececec;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .15s,border-color .15s;user-select:none;}
+.bk:active{background:#f5f5f5;}
 .bk.done{background:#f0f8f0;border-color:#a8d8a8;}
-.bk.cancelled{background:#f9f9f9;border-color:#e5e5e5;opacity:.5;}
+.bk.cancelled{background:#f9f9f9;border-color:#e5e5e5;opacity:.5;cursor:default;}
 
-/* 상태 아이콘 */
-.bk-icon{width:28px;height:28px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;}
+.bk-icon{width:28px;height:28px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;}
 .bk-icon.done{background:#2d6a2d;border-color:#2d6a2d;color:#fff;}
 .bk-icon.wait{color:#ccc;}
 
 .bk-body{flex:1;min-width:0;}
 .bk-row1{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
-.bk-name{font-size:15px;font-weight:700;color:#1a1a1a;}
-.bn-badge{display:inline-flex;align-items:center;background:#e8f4e8;color:#2d6a2d;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;flex-shrink:0;}
+.bk-name{font-size:15px;font-weight:700;}
+.bn-badge{background:#e8f4e8;color:#2d6a2d;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;flex-shrink:0;}
 .bk-item{font-size:13px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.bk-req{display:inline-block;margin-top:5px;font-size:11px;color:#b85c00;background:#fff3e0;border:1px solid #ffd8a8;padding:3px 8px;border-radius:6px;line-height:1.4;}
+.bk-req{display:inline-block;margin-top:5px;font-size:11px;color:#b85c00;background:#fff3e0;border:1px solid #ffd8a8;padding:3px 8px;border-radius:6px;}
+
+.bk-time{font-size:15px;font-weight:700;color:#1F3864;flex-shrink:0;}
 
 .cancel-hd{font-size:11px;font-weight:700;color:#c00;margin:16px 0 7px;}
 
@@ -105,6 +99,39 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 .hint{background:#fff;border-radius:10px;border:1px solid #eee;padding:12px;text-align:center;font-size:12px;color:#aaa;margin-top:10px;}
 .hint b{color:#1F3864;}
 
+/* ── 탭3: 현장판매 ── */
+.sales-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.sales-card{background:#fff;border-radius:10px;padding:10px 8px;text-align:center;border:1px solid #eee;}
+.sales-card .sn{font-size:22px;font-weight:700;line-height:1.1;}
+.sales-card .sl{font-size:11px;color:#999;margin-top:2px;}
+.sn-prod{color:#1F3864;}.sn-sold{color:#e07000;}.sn-remain{color:#2d6a2d;}
+
+.sale-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.sale-item{background:#fff;border-radius:12px;border:1.5px solid #eee;overflow:hidden;}
+.sale-item-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 8px;}
+.sale-name{font-size:15px;font-weight:700;color:#1a1a1a;}
+.sale-edit-btn{background:none;border:1px solid #ddd;border-radius:6px;padding:4px 10px;font-size:11px;color:#888;cursor:pointer;font-family:inherit;}
+.sale-edit-btn:active{background:#f5f5f5;}
+
+.sale-nums{display:grid;grid-template-columns:repeat(3,1fr);padding:0 14px 10px;gap:4px;}
+.sale-num{text-align:center;}
+.sale-num .val{font-size:22px;font-weight:700;line-height:1.2;}
+.sale-num .lbl{font-size:10px;color:#aaa;margin-top:1px;}
+.val-prod{color:#1F3864;}.val-sold{color:#e07000;}.val-remain{color:#2d6a2d;}
+.val-remain.low{color:#cc0000;}
+
+.sale-btns{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #f0f0f0;}
+.sale-btn{padding:13px;border:none;background:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .12s;}
+.sale-btn:active{background:#f0f0f0;}
+.sale-btn-sell{color:#1F3864;border-right:1px solid #f0f0f0;}
+.sale-btn-undo{color:#e07000;}
+
+.sales-reset-btn{width:100%;padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;font-size:12px;color:#aaa;cursor:pointer;font-family:inherit;}
+.sales-reset-btn:active{background:#f5f5f5;}
+
+/* 생산수량 입력 */
+.prod-input{width:100%;border:2px solid #1F3864;border-radius:10px;padding:12px;font-size:28px;font-weight:700;text-align:center;color:#1F3864;font-family:inherit;outline:none;margin-bottom:4px;}
+
 .save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1F3864;color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:999;white-space:nowrap;}
 .save-toast.show{opacity:1;}
 </style>
@@ -122,21 +149,73 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
   <div class="tabs">
     <div class="tab on" onclick="switchTab(0)">픽업 체크</div>
     <div class="tab"    onclick="switchTab(1)">생산 현황</div>
+    <div class="tab"    onclick="switchTab(2)">현장 판매</div>
   </div>
 </div>
 
 <div class="content">
   <div class="panel on" id="p0"><div class="loading"><div class="spinner"></div>불러오는 중...</div></div>
   <div class="panel"    id="p1"><div class="loading"><div class="spinner"></div>불러오는 중...</div></div>
+  <div class="panel"    id="p2"><div class="loading"><div class="spinner"></div>불러오는 중...</div></div>
+</div>
+
+<!-- 픽업 팝업 -->
+<div class="modal-bg hide" id="pickup-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="m-title" id="pm-name"></div>
+      <div class="m-sub"   id="pm-sub"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-btns" id="pm-btns"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 판매 팝업 -->
+<div class="modal-bg hide" id="sale-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="m-title" id="sm-title"></div>
+      <div class="m-sub"   id="sm-sub"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-info">현재 판매: <span id="sm-cur"></span>개</div>
+      <div class="modal-arrow">→ <b id="sm-next"></b>개</div>
+      <div class="modal-btns" id="sm-btns"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 생산수량 수정 팝업 -->
+<div class="modal-bg hide" id="prod-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="m-title" id="prm-name"></div>
+      <div class="m-sub">생산수량 수정</div>
+    </div>
+    <div class="modal-body">
+      <input class="prod-input" type="number" min="0" id="prm-input" placeholder="0">
+      <div class="modal-btns" style="margin-top:12px;">
+        <button class="btn btn-confirm" onclick="saveProdQty()">저장</button>
+        <button class="btn btn-close"   onclick="closeModal('prod-modal')">닫기</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="save-toast" id="toast"></div>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbzOi7YWHBOfdFaWuyl5XeV2Rx3qHsUKX_mckooJuv9kCqpNwHcKiGiBP8V4Yre2p_Iylg/exec';
+const API_URL = 'YOUR_GAS_WEBAPP_URL_HERE';
 
-let appData = null, pickStatus = {};
+let appData    = null;
+let pickStatus = {};
+let salesData  = [];
+let curSaleItem = null;
+let curProdItem = null;
 
+// ── 탭 / 유틸 ────────────────────────────────────────────────────
 function switchTab(i) {
   document.querySelectorAll('.tab').forEach((t,j)   => t.classList.toggle('on', i===j));
   document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('on', i===j));
@@ -148,51 +227,61 @@ function toast(msg) {
   setTimeout(() => el.classList.remove('show'), 1800);
 }
 async function api(params) {
-  const res = await fetch(API_URL + '?' + new URLSearchParams(params), { redirect: 'follow' });
+  const res = await fetch(API_URL + '?' + new URLSearchParams(params), { redirect:'follow' });
   return res.json();
 }
+function closeModal(id) { document.getElementById(id).classList.add('hide'); }
+function openModal(id)  { document.getElementById(id).classList.remove('hide'); }
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 
+// ── 전체 로드 ────────────────────────────────────────────────────
 async function loadAll() {
-  ['p0','p1'].forEach(id => {
+  ['p0','p1','p2'].forEach(id => {
     document.getElementById(id).innerHTML = '<div class="loading"><div class="spinner"></div>불러오는 중...</div>';
   });
   try {
-    const [data, ps] = await Promise.all([
+    const [data, ps, sales] = await Promise.all([
       api({ action: 'data' }),
       api({ action: 'pickup' }),
+      api({ action: 'getSales' }),
     ]);
     if (data.error) { showErr(data.error); return; }
     appData    = data;
-    pickStatus = ps.status || {};
+    pickStatus = ps.status  || {};
+    salesData  = sales.sales || [];
     document.getElementById('date-str').textContent = data.dateStr || '';
     renderPickup();
     renderProd();
+    renderSales();
   } catch(e) {
-    showErr('네트워크 오류: ' + e.message + '<br>API_URL을 확인하세요.');
+    showErr('네트워크 오류: ' + e.message);
   }
 }
 function showErr(msg) {
-  ['p0','p1'].forEach(id => document.getElementById(id).innerHTML = '<div class="err">' + msg + '</div>');
+  ['p0','p1','p2'].forEach(id => document.getElementById(id).innerHTML = '<div class="err">'+msg+'</div>');
 }
 
-// ── 탭1: 픽업 체크 ──────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════
+// 탭1: 픽업 체크
+// ════════════════════════════════════════════════════════════════
 function renderPickup() {
   const conf = appData.bookings.filter(b => !b.cancelled);
   const canc = appData.bookings.filter(b =>  b.cancelled);
-  const done = conf.filter(b => pickStatus[b.name + '_' + b.pickup]).length;
+  const done = conf.filter(b => pickStatus[b.name+'_'+b.pickup]).length;
 
   let h = '<div class="stat-bar">'
-    + statCard(done,            '픽업 완료', 'n-done')
+    + statCard(done,             '픽업 완료','n-done')
     + statCard(conf.length-done, '대기 중',  'n-wait')
     + statCard(conf.length,      '전체 예약','n-all')
     + '</div>';
   h += '<button class="reset-btn" onclick="resetPickup()">픽업 상태 전체 초기화</button>';
-  h += '<div class="swipe-hint">→ 오른쪽으로 밀면 완료  ·  ← 왼쪽으로 밀면 취소</div>';
 
   // 시간대 그룹
   const groups = {};
   for (const b of conf) {
-    const t = b.pickup || '시간미정';
+    const t = b.pickup || '미정';
     if (!groups[t]) groups[t] = [];
     groups[t].push(b);
   }
@@ -204,117 +293,78 @@ function renderPickup() {
     const bks     = groups[time];
     const grpDone = bks.filter(b => pickStatus[b.name+'_'+b.pickup]).length;
     h += '<div class="time-group">'
-       + '<div class="time-label"><span>' + esc(time) + '</span>'
-       + '<span class="tl-count">' + grpDone + ' / ' + bks.length + ' 완료</span></div>'
+       + '<div class="time-label"><span>'+esc(time)+'</span>'
+       + '<span class="tl-count">'+grpDone+' / '+bks.length+' 완료</span></div>'
        + '<div class="bklist">';
-
     for (const b of bks) {
-      const key  = b.name + '_' + b.pickup;
+      const key  = b.name+'_'+b.pickup;
       const chkd = !!pickStatus[key];
-      h += `
-        <div class="bk-wrap" id="wrap-${esc(key)}">
-          <div class="bk-bg bk-bg-done"><span>✓ 완료</span></div>
-          <div class="bk-bg bk-bg-undo"><span>↩ 취소</span></div>
-          <div class="bk ${chkd?'done':''}" id="bk-${esc(key)}" data-key="${esc(key)}">
-            <div class="bk-icon ${chkd?'done':'wait'}" id="icon-${esc(key)}">${chkd?'✓':'○'}</div>
-            <div class="bk-body">
-              <div class="bk-row1">
-                <span class="bk-name">${esc(b.name)}</span>
-                ${b.bonaeng==='O'?'<span class="bn-badge">❄ 보냉백</span>':''}
-              </div>
-              <div class="bk-item">${esc(b.item)}</div>
-              ${b.request?`<div class="bk-req">📝 ${esc(b.request)}</div>`:''}
-            </div>
-          </div>
-        </div>`;
+      h += '<div class="bk'+(chkd?' done':'')+'" onclick="openPickupModal(\''+esc(key)+'\')" id="bk-'+esc(key)+'">'
+         + '<div class="bk-icon '+(chkd?'done':'wait')+'" id="icon-'+esc(key)+'">'+(chkd?'✓':'○')+'</div>'
+         + '<div class="bk-body">'
+         + '<div class="bk-row1"><span class="bk-name">'+esc(b.name)+'</span>'
+         + (b.bonaeng==='O'?'<span class="bn-badge">❄ 보냉백</span>':'')
+         + '</div>'
+         + '<div class="bk-item">'+esc(b.item)+'</div>'
+         + (b.request?'<div class="bk-req">📝 '+esc(b.request)+'</div>':'')
+         + '</div>'
+         + '<div class="bk-time">'+esc(b.pickup)+'</div>'
+         + '</div>';
     }
     h += '</div></div>';
   }
 
   if (canc.length) {
-    h += '<div class="cancel-hd">취소건 (' + canc.length + ')</div><div class="bklist">';
+    h += '<div class="cancel-hd">취소건 ('+canc.length+')</div><div class="bklist">';
     for (const b of canc) {
-      h += '<div class="bk-wrap"><div class="bk cancelled"><div class="bk-body">'
-         + '<div class="bk-row1"><span class="bk-name" style="text-decoration:line-through;color:#bbb">' + esc(b.name) + '</span></div>'
-         + '<div class="bk-item">' + esc(b.item) + ' · ' + esc(b.pickup) + '</div>'
-         + '</div></div></div>';
+      h += '<div class="bk cancelled"><div class="bk-body">'
+         + '<div class="bk-name" style="text-decoration:line-through;color:#bbb">'+esc(b.name)+'</div>'
+         + '<div class="bk-item">'+esc(b.item)+' · '+esc(b.pickup)+'</div>'
+         + '</div></div>';
     }
     h += '</div>';
   }
 
   document.getElementById('p0').innerHTML = h;
-  attachSwipe();
 }
 
 function statCard(n, label, cls) {
   return '<div class="stat"><div class="n '+cls+'">'+n+'</div><div class="l">'+label+'</div></div>';
 }
 
-// ── 스와이프 로직 ──────────────────────────────────────────────
-function attachSwipe() {
-  document.querySelectorAll('.bk[data-key]').forEach(card => {
-    let startX = 0, startY = 0, curX = 0, dragging = false, decided = false;
-    const THRESH = 80; // 완료 판정 거리(px)
+// ── 픽업 팝업 ────────────────────────────────────────────────────
+function openPickupModal(key) {
+  const booking = appData.bookings.find(b => b.name+'_'+b.pickup === key);
+  if (!booking) return;
+  const isDone = !!pickStatus[key];
 
-    card.addEventListener('touchstart', e => {
-      startX  = e.touches[0].clientX;
-      startY  = e.touches[0].clientY;
-      curX    = 0;
-      dragging = false;
-      decided  = false;
-      card.style.transition = 'none';
-    }, { passive: true });
+  document.getElementById('pm-name').textContent = booking.name;
+  document.getElementById('pm-sub').textContent  = booking.item + ' · ' + booking.pickup
+    + (booking.bonaeng==='O' ? ' · 보냉백' : '');
 
-    card.addEventListener('touchmove', e => {
-      const dx = e.touches[0].clientX - startX;
-      const dy = e.touches[0].clientY - startY;
-
-      // 세로 스크롤이면 무시
-      if (!dragging && Math.abs(dy) > Math.abs(dx) + 5) return;
-
-      dragging = true;
-      e.preventDefault(); // 가로 스와이프 시 스크롤 방지
-
-      curX = dx;
-      // 완료(오른쪽): 최대 130px / 취소(왼쪽): 최대 -100px
-      const clamped = Math.max(-100, Math.min(130, dx));
-      card.style.transform = `translateX(${clamped}px)`;
-    }, { passive: false });
-
-    card.addEventListener('touchend', () => {
-      if (!dragging) return;
-      card.style.transition = 'transform .2s ease';
-
-      const key     = card.dataset.key;
-      const isDone  = !!pickStatus[key];
-
-      if (curX > THRESH && !isDone) {
-        // → 완료 처리
-        card.style.transform = 'translateX(0)';
-        applyPickup(key, true);
-      } else if (curX < -THRESH && isDone) {
-        // ← 완료 취소
-        card.style.transform = 'translateX(0)';
-        applyPickup(key, false);
-      } else {
-        card.style.transform = 'translateX(0)';
-      }
-      dragging = false;
-    });
-  });
+  const btns = document.getElementById('pm-btns');
+  if (isDone) {
+    // 이미 완료 → 완료취소만
+    btns.innerHTML =
+      '<button class="btn btn-cancel-action" onclick="applyPickup(\''+esc(key)+'\',false)">↩ 완료 취소</button>'
+      +'<button class="btn btn-close" onclick="closeModal(\'pickup-modal\')">닫기</button>';
+  } else {
+    // 대기 중 → 픽업완료만
+    btns.innerHTML =
+      '<button class="btn btn-confirm" onclick="applyPickup(\''+esc(key)+'\',true)">✓ 픽업 완료</button>'
+      +'<button class="btn btn-close" onclick="closeModal(\'pickup-modal\')">닫기</button>';
+  }
+  openModal('pickup-modal');
 }
 
 function applyPickup(key, newVal) {
+  closeModal('pickup-modal');
   pickStatus[key] = newVal;
 
-  const card = document.getElementById('bk-' + key);
-  const icon = document.getElementById('icon-' + key);
+  const card = document.getElementById('bk-'+key);
+  const icon = document.getElementById('icon-'+key);
   if (card) card.classList.toggle('done', newVal);
-  if (icon) {
-    icon.classList.toggle('done', newVal);
-    icon.classList.toggle('wait', !newVal);
-    icon.textContent = newVal ? '✓' : '○';
-  }
+  if (icon) { icon.className='bk-icon '+(newVal?'done':'wait'); icon.textContent=newVal?'✓':'○'; }
 
   const conf = appData.bookings.filter(b => !b.cancelled);
   const done = conf.filter(b => pickStatus[b.name+'_'+b.pickup]).length;
@@ -323,35 +373,35 @@ function applyPickup(key, newVal) {
 
   // 시간대 카운터 갱신
   document.querySelectorAll('.time-group').forEach(grp => {
-    const bkEls = grp.querySelectorAll('.bk[data-key]');
-    const total  = bkEls.length;
-    const grpDone = [...bkEls].filter(el => pickStatus[el.dataset.key]).length;
-    const counter = grp.querySelector('.tl-count');
-    if (counter) counter.textContent = grpDone + ' / ' + total + ' 완료';
+    const els   = grp.querySelectorAll('.bk[id]');
+    const total = els.length;
+    const gdone = [...els].filter(el => pickStatus[el.id.replace('bk-','')]).length;
+    const cnt   = grp.querySelector('.tl-count');
+    if (cnt) cnt.textContent = gdone+' / '+total+' 완료';
   });
 
   toast(newVal ? '✓ 픽업 완료' : '↩ 픽업 취소');
-  api({ action: 'setPickup', key, checked: newVal });
+  api({ action:'setPickup', key, checked: newVal });
 }
 
 async function resetPickup() {
   if (!confirm('픽업 상태를 전체 초기화할까요?')) return;
   pickStatus = {};
-  await api({ action: 'resetPickup' });
+  await api({ action:'resetPickup' });
   renderPickup();
   toast('초기화 완료');
 }
 
-// ── 탭2: 생산 현황 ──────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════
+// 탭2: 생산 현황
+// ════════════════════════════════════════════════════════════════
 function renderProd() {
-  let tj=0, th=0, ty=0, tt=0;
+  let tj=0,th=0,ty=0,tt=0;
   let h = '<div class="prod-wrap">'
         + '<div class="prod-hd"><div class="ph-l">품목</div><div>조각</div><div>현장</div><div>예약</div><div>합계</div></div>';
-
   for (const item of appData.items) {
     tj+=item.jogak; th+=item.hyunjang; ty+=item.yeyak;
-    const total = item.jogak + item.hyunjang + item.yeyak;
-    tt += total;
+    const total = item.jogak+item.hyunjang+item.yeyak; tt+=total;
     h += '<div class="prod-row">'
        + '<div class="pname'+(total===0?' dim':'')+'">'+esc(item.name)+'</div>'
        + qtyCell(item.name,'jogak',    item.jogak)
@@ -360,52 +410,178 @@ function renderProd() {
        + '<div class="pc pc-t">'+(total     ?total     :'<span class="pc-e">-</span>')+'</div>'
        + '</div>';
   }
-
-  h += '<div class="prod-foot"><div class="ph-l">합  계</div><div>'+tj+'</div><div>'+th+'</div><div>'+ty+'</div><div>'+tt+'</div></div>'
-     + '</div>'
+  h += '<div class="prod-foot"><div class="ph-l">합  계</div><div>'+tj+'</div><div>'+th+'</div><div>'+ty+'</div><div>'+tt+'</div></div></div>'
      + '<div class="legend">'
      + '<span><span class="ldot" style="background:#aaa"></span>조각</span>'
      + '<span><span class="ldot" style="background:#0070C0"></span>현장</span>'
      + '<span><span class="ldot" style="background:#2d6a2d"></span>예약</span>'
      + '</div>'
      + '<div class="hint">조각·현장 수량 입력 후 엔터 → <b>Google Sheets 자동 저장</b></div>';
-
   document.getElementById('p1').innerHTML = h;
 }
-
 function qtyCell(name, type, val) {
   return '<div><input class="qty-input" type="number" min="0" value="'+val
-       + '" onchange="saveQty(\''+esc(name)+'\',\''+type+'\',this.value,this)"'
-       + ' onfocus="this.select()"></div>';
+       +'" onchange="saveQty(\''+esc(name)+'\',\''+type+'\',this.value,this)" onfocus="this.select()"></div>';
 }
-
 async function saveQty(item, type, value, el) {
-  el.style.opacity = '.5';
+  el.style.opacity='.5';
   const res = await api({ action:'updateQty', item, type, value: Number(value) });
-  el.style.opacity = '1';
+  el.style.opacity='1';
   if (res.ok) {
     toast('저장 완료 ✓');
-    const t = appData.items.find(i => i.name === item);
-    if (t) { t[type] = Number(value); updateFooter(); }
-  } else {
-    toast('저장 실패: ' + (res.error||''));
-  }
+    const t = appData.items.find(i => i.name===item);
+    if (t) { t[type]=Number(value); updateFooter(); }
+  } else toast('저장 실패: '+(res.error||''));
 }
-
 function updateFooter() {
   let tj=0,th=0,ty=0,tt=0;
   for (const i of appData.items) { tj+=i.jogak; th+=i.hyunjang; ty+=i.yeyak; tt+=i.jogak+i.hyunjang+i.yeyak; }
   const c = document.querySelectorAll('.prod-foot div');
-  if (c[1]) c[1].textContent=tj;
-  if (c[2]) c[2].textContent=th;
-  if (c[3]) c[3].textContent=ty;
-  if (c[4]) c[4].textContent=tt;
+  if(c[1])c[1].textContent=tj; if(c[2])c[2].textContent=th;
+  if(c[3])c[3].textContent=ty; if(c[4])c[4].textContent=tt;
 }
 
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+// ════════════════════════════════════════════════════════════════
+// 탭3: 현장 판매
+// ════════════════════════════════════════════════════════════════
+function renderSales() {
+  if (!salesData.length) {
+    document.getElementById('p2').innerHTML =
+      '<div class="err">현장판매 시트가 없습니다.<br>Google Sheets에 <b>현장판매</b> 시트를 만들고<br>A열에 품목명을 입력해주세요.</div>';
+    return;
+  }
+
+  const totalProd   = salesData.reduce((s,i) => s+i.production, 0);
+  const totalSold   = salesData.reduce((s,i) => s+i.sold, 0);
+  const totalRemain = totalProd - totalSold;
+
+  let h = '<div class="sales-summary">'
+    + salesStat(totalProd,   '총 생산', 'sn-prod')
+    + salesStat(totalSold,   '총 판매', 'sn-sold')
+    + salesStat(totalRemain, '총 잔여', 'sn-remain')
+    + '</div>';
+
+  h += '<div class="sale-list">';
+  for (const item of salesData) {
+    const remain = item.production - item.sold;
+    const lowStock = remain <= 2 && item.production > 0;
+    h += '<div class="sale-item">'
+       + '<div class="sale-item-head">'
+       + '<span class="sale-name">'+esc(item.name)+'</span>'
+       + '<button class="sale-edit-btn" onclick="openProdModal(\''+esc(item.name)+'\','+item.production+')">✏ 생산수량</button>'
+       + '</div>'
+       + '<div class="sale-nums">'
+       + '<div class="sale-num"><div class="val val-prod">'+item.production+'</div><div class="lbl">생산</div></div>'
+       + '<div class="sale-num"><div class="val val-sold">'+item.sold+'</div><div class="lbl">판매</div></div>'
+       + '<div class="sale-num"><div class="val val-remain'+(lowStock?' low':'')+'">'+remain+'</div><div class="lbl">잔여'+(lowStock?' ⚠':'')+'</div></div>'
+       + '</div>'
+       + '<div class="sale-btns">'
+       + '<button class="sale-btn sale-btn-sell" onclick="openSaleModal(\''+esc(item.name)+'\',\'sell\')">판매</button>'
+       + '<button class="sale-btn sale-btn-undo" onclick="openSaleModal(\''+esc(item.name)+'\',\'undo\')">취소</button>'
+       + '</div>'
+       + '</div>';
+  }
+  h += '</div>';
+  h += '<button class="sales-reset-btn" id="reset-sales-btn" onclick="handleSalesReset()">판매 수량 초기화 (길게 누르기)</button>';
+
+  document.getElementById('p2').innerHTML = h;
+
+  // 길게 누르기 초기화
+  setupLongPress(document.getElementById('reset-sales-btn'), doSalesReset);
 }
 
+function salesStat(n, label, cls) {
+  return '<div class="sales-card"><div class="sn '+cls+'">'+n+'</div><div class="sl">'+label+'</div></div>';
+}
+
+// ── 판매/취소 팝업 ───────────────────────────────────────────────
+function openSaleModal(itemName, mode) {
+  const item = salesData.find(i => i.name === itemName);
+  if (!item) return;
+  curSaleItem = { name: itemName, mode };
+
+  const isSell  = mode === 'sell';
+  const nextQty = isSell ? item.sold + 1 : Math.max(0, item.sold - 1);
+
+  document.getElementById('sm-title').textContent = itemName + (isSell ? ' 판매' : ' 취소');
+  document.getElementById('sm-sub').textContent   = isSell ? '1개 판매 처리' : '1개 판매 취소';
+  document.getElementById('sm-cur').textContent   = item.sold;
+  document.getElementById('sm-next').textContent  = nextQty;
+
+  const btns = document.getElementById('sm-btns');
+  if (isSell) {
+    btns.innerHTML =
+      '<button class="btn btn-confirm" onclick="confirmSale()">판매 완료</button>'
+      +'<button class="btn btn-close" onclick="closeModal(\'sale-modal\')">닫기</button>';
+  } else {
+    btns.innerHTML =
+      '<button class="btn btn-cancel-action" onclick="confirmSale()">취소 확인</button>'
+      +'<button class="btn btn-close" onclick="closeModal(\'sale-modal\')">닫기</button>';
+  }
+  openModal('sale-modal');
+}
+
+async function confirmSale() {
+  closeModal('sale-modal');
+  if (!curSaleItem) return;
+
+  const item    = salesData.find(i => i.name === curSaleItem.name);
+  if (!item) return;
+  const isSell  = curSaleItem.mode === 'sell';
+  const newSold = isSell ? item.sold + 1 : Math.max(0, item.sold - 1);
+
+  item.sold = newSold;
+  renderSales();
+
+  const res = await api({ action:'setSaleQty', item: curSaleItem.name, field:'sold', value: newSold });
+  if (res.ok) toast(isSell ? '판매 완료 ✓' : '취소 완료');
+  else { toast('저장 실패'); item.sold = isSell ? newSold-1 : newSold+1; renderSales(); }
+  curSaleItem = null;
+}
+
+// ── 생산수량 수정 팝업 ───────────────────────────────────────────
+function openProdModal(itemName, currentQty) {
+  curProdItem = itemName;
+  document.getElementById('prm-name').textContent = itemName;
+  document.getElementById('prm-input').value = currentQty;
+  openModal('prod-modal');
+  setTimeout(() => document.getElementById('prm-input').select(), 100);
+}
+
+async function saveProdQty() {
+  const val = Number(document.getElementById('prm-input').value) || 0;
+  closeModal('prod-modal');
+  if (!curProdItem) return;
+
+  const item = salesData.find(i => i.name === curProdItem);
+  if (item) item.production = val;
+  renderSales();
+
+  const res = await api({ action:'setSaleQty', item: curProdItem, field:'production', value: val });
+  if (res.ok) toast('생산수량 저장 ✓');
+  else toast('저장 실패: ' + (res.error||''));
+  curProdItem = null;
+}
+
+// ── 판매 초기화 (길게 누르기) ────────────────────────────────────
+let longPressTimer = null;
+function setupLongPress(el, callback) {
+  const DURATION = 1500;
+  el.addEventListener('touchstart', () => {
+    longPressTimer = setTimeout(() => { callback(); longPressTimer = null; }, DURATION);
+  }, { passive:true });
+  el.addEventListener('touchend',   () => { if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; } });
+  el.addEventListener('touchmove',  () => { if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; } });
+}
+function handleSalesReset() { toast('길게 누르면 초기화됩니다 (1.5초)'); }
+async function doSalesReset() {
+  salesData.forEach(i => i.sold = 0);
+  renderSales();
+  await api({ action:'resetSales' });
+  toast('판매 수량 초기화 완료');
+}
+
+// ════════════════════════════════════════════════════════════════
 loadAll();
 </script>
 </body>
