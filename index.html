@@ -127,18 +127,52 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 
 .save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1F3864;color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:999;white-space:nowrap;}
 .save-toast.show{opacity:1;}
+
+/* 매장 선택 화면 */
+.store-select{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:30px;background:#f4f3ef;}
+.store-logo{font-size:11px;font-weight:700;color:#1F3864;letter-spacing:3px;margin-bottom:8px;text-transform:uppercase;opacity:.7;}
+.store-title{font-size:24px;font-weight:700;color:#1a1a1a;margin-bottom:4px;text-align:center;}
+.store-sub{font-size:13px;color:#aaa;margin-bottom:44px;text-align:center;}
+.store-btn{width:100%;max-width:320px;padding:18px 20px;border:none;border-radius:14px;margin-bottom:12px;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:16px;transition:transform .12s;box-shadow:0 2px 12px rgba(0,0,0,.1);}
+.store-btn:active{transform:scale(.97);}
+.store-btn-bon{background:#1F3864;color:#fff;}
+.store-btn-kin{background:#2d5a1b;color:#fff;}
+.store-btn-prod{background:#4a1a6b;color:#fff;}
+.store-icon{font-size:30px;flex-shrink:0;}
+.store-text .t1{font-size:16px;font-weight:700;}
+.store-text .t2{font-size:12px;opacity:.7;margin-top:3px;}
 </style>
 </head>
 <body>
 
-<div class="hd" id="hd">
+<!-- 매장 선택 화면 -->
+<div class="store-select" id="store-select">
+  <div class="store-logo">La Terrasse de Paris</div>
+  <div class="store-title">매장 선택</div>
+  <div class="store-sub">접속할 매장을 선택해주세요</div>
+  <button class="store-btn store-btn-bon" onclick="selectStore('bonjeom')">
+    <div class="store-icon">🏪</div>
+    <div class="store-text"><div class="t1">본점</div><div class="t2">픽업 체크 · 현장 판매</div></div>
+  </button>
+  <button class="store-btn store-btn-kin" onclick="selectStore('kintex')">
+    <div class="store-icon">🏬</div>
+    <div class="store-text"><div class="t1">킨텍스점</div><div class="t2">픽업 체크 · 현장 판매</div></div>
+  </button>
+  <button class="store-btn store-btn-prod" onclick="selectStore('production')">
+    <div class="store-icon">👨‍🍳</div>
+    <div class="store-text"><div class="t1">생산팀</div><div class="t2">합산 생산 현황</div></div>
+  </button>
+</div>
+
+<div class="hd" id="hd" style="display:none">
   <div class="hd-top">
     <div>
       <div class="hd-title">La Terrasse de Paris</div>
       <div class="hd-store" id="store-label"></div>
     </div>
     <button class="refresh" onclick="loadAll()">↻ 새로고침</button>
-  </div>
+      <button class="refresh" onclick="goBack()">매장 변경</button>
+    </div>
   <div class="tabs" id="tabs"></div>
 </div>
 
@@ -184,11 +218,27 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 
 <script>
 // ★ GAS 웹앱 URL 입력 ★
-const API_URL = 'https://script.google.com/macros/s/AKfycbzOi7YWHBOfdFaWuyl5XeV2Rx3qHsUKX_mckooJuv9kCqpNwHcKiGiBP8V4Yre2p_Iylg/exec';
+const API_URL = 'YOUR_GAS_WEBAPP_URL_HERE';
 
-// URL 파라미터로 매장 결정
-const params = new URLSearchParams(location.search);
-const STORE  = params.get('store') || 'bonjeom'; // bonjeom | kintex | production
+// 매장 선택
+let STORE = sessionStorage.getItem('selected_store') || new URLSearchParams(location.search).get('store') || '';
+
+function selectStore(store) {
+  STORE = store;
+  sessionStorage.setItem('selected_store', store);
+  document.getElementById('store-select').style.display = 'none';
+  document.getElementById('hd').style.display = 'block';
+  document.getElementById('main-content').style.display = 'block';
+  initApp();
+}
+
+function goBack() {
+  sessionStorage.removeItem('selected_store');
+  STORE = '';
+  document.getElementById('store-select').style.display = 'flex';
+  document.getElementById('hd').style.display = 'none';
+  document.getElementById('main-content').style.display = 'none';
+}
 
 // 매장별 설정
 const STORE_CONFIG = {
@@ -205,6 +255,7 @@ let prodData   = null;
 let curSaleItem = null, curProdItem = null;
 
 // ── 초기화 ───────────────────────────────────────────────────────
+function initApp() {
 (function init() {
   const hd = document.getElementById('hd');
   hd.className = 'hd ' + STORE;
@@ -575,7 +626,17 @@ function updateProdFooter(){
   [tj,thb,thk,tyb,tyk,tt].forEach((v,i)=>{if(c[i+1])c[i+1].textContent=v;});
 }
 
-loadAll();
+}); // end init
+
+// 초기 실행
+if (STORE) {
+  document.getElementById('store-select').style.display = 'none';
+  document.getElementById('hd').style.display = 'block';
+  document.getElementById('main-content').style.display = 'block';
+  initApp();
+} else {
+  document.getElementById('main-content').style.display = 'none';
+}
 </script>
 </body>
 </html>
